@@ -1,3 +1,4 @@
+<%@page import="uta.mav.appoint.login.AdvisorUser"%>
 <jsp:include page='<%=(String) request.getAttribute("includeHeader")%>' />
 <style>
 .custab {
@@ -14,14 +15,14 @@
 	transition: 0.5s;
 }
 </style>
-
+<%String userType = (String) request.getAttribute("advisorUser"); %>
 
 <div class="container">
 	<div class="btn-group">
 		<form action="appointments" method="post" name="cancel">
 			<input type=hidden name=cancel_button id="cancel_button"> <input
 				type=hidden name=edit_button id="edit_button">
-			<div class="row col-md-16  custyle">
+			<div class="row col-md-12  custyle">
 				<table class="table table-striped custab">
 					<thead>
 						<tr>
@@ -42,9 +43,11 @@
 							<th>Phone Number</th> 
 							
 							
+							<%if(userType.equalsIgnoreCase("true")){
 							
-							
-							
+						 %>
+							<th class="text-center">Comments</th>
+							<%} %>
 							<th class="text-center">Action</th>
 						</tr>
 					</thead>
@@ -69,7 +72,12 @@
 						
 						<!-- =array.get(i).getstudentPhoneNumber() -->
 						<td><%=array.get(i).getStudentPhoneNumber()%></td>
-						
+						<!-- added by aaditya  -->
+						<%if(userType.equalsIgnoreCase("true")){
+							
+						 %>
+						<td><%=array.get(i).getAdvisorComments()%></td>
+						<%} %>
 						
 						
 						
@@ -102,9 +110,10 @@
 										
 										//<Hien>
 										document.getElementById("StudentPhoneNumber").value = "<%=array.get(i).getStudentPhoneNumber()%>";
-										
-										
-										
+										<%if(userType.equalsIgnoreCase("true")){%>				
+											 document.getElementById("comments").value = "<%=array.get(i).getAdvisorComments()%>";
+												
+										<% } %>					
 										
 										
 										$('#addApptModal').modal();
@@ -169,6 +178,12 @@
 					<b>UTA Student ID: </b><br> <input type="text" name=studentid
 						id="studentid"><br> <b>Description:</b><br>
 					<textarea rows=4 columns="10" name=description id="description"></textarea>
+					<%if(userType.equalsIgnoreCase("true")){
+							
+						 %>
+					<b>Comments:</b><br>
+					<textarea rows=4 columns="10" name=comments id="comments"></textarea>
+					<% }  %>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">

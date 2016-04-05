@@ -56,7 +56,7 @@ public class RDBImpl implements DBImplInterface{
 	public LoginUser checkUser(GetSet set) throws SQLException{
 		LoginUser user = null;
 		try{
-			SQLCmd cmd = new CheckUser(set.getEmailAddress());
+			SQLCmd cmd = new CheckUser(set.getEmailAddress(), set.getPassword());
 			cmd.execute();
 			//System.out.println("Result = "+cmd.getResult());
 			user = (LoginUser)(cmd.getResult()).get(0);
@@ -292,7 +292,7 @@ public class RDBImpl implements DBImplInterface{
 			Connection conn = this.connectDB();
 			PreparedStatement statement;
 //			String command = "SELECT User_Advisor.pname,User_Advisor.email,date,start,end,type,id,Appointments.description,studentId,Appointments.student_email FROM USER,Appointments,User_Advisor "
-					String command = "SELECT User_Advisor.pname,User.email,date,start,end,type,id,Appointments.description,studentId,Appointments.student_email,Appointments.student_cell FROM USER,Appointments,User_Advisor "
+					String command = "SELECT User_Advisor.pname,User.email,date,start,end,type,id,Appointments.description,studentId,Appointments.student_email,Appointments.student_cell,Appointments.comments FROM USER,Appointments,User_Advisor "
 						+ "WHERE USER.email=? AND user.userid=Appointments.advisor_userid AND User_Advisor.userid=Appointments.advisor_userid";
 			statement = conn.prepareStatement(command);
 			statement.setString(1, user.getEmail());
@@ -310,6 +310,7 @@ public class RDBImpl implements DBImplInterface{
 				set.setStudentId(rs.getString(9));
 				set.setStudentEmail(rs.getString(10));
 				set.setStudentPhoneNumber(rs.getString(11));
+				set.setAdvisorComments(rs.getString(12));
 				Appointments.add(set);
 			}
 			conn.close();
@@ -355,6 +356,7 @@ public class RDBImpl implements DBImplInterface{
 		
 		return Appointments;
 	}
+	//getAppointmentsAdvisor
 
 	public ArrayList<Object> getAppointments(AdminUser user){
 		ArrayList<Object> Appointments = new ArrayList<Object>();
