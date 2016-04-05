@@ -56,7 +56,7 @@ public class RDBImpl implements DBImplInterface{
 	public LoginUser checkUser(GetSet set) throws SQLException{
 		LoginUser user = null;
 		try{
-			SQLCmd cmd = new CheckUser(set.getEmailAddress(), set.getPassword());
+			SQLCmd cmd = new CheckUser(set.getEmailAddress());
 			cmd.execute();
 			//System.out.println("Result = "+cmd.getResult());
 			user = (LoginUser)(cmd.getResult()).get(0);
