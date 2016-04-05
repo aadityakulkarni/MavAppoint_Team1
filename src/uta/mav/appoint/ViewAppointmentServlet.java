@@ -14,6 +14,7 @@ import uta.mav.appoint.beans.Appointment;
 import uta.mav.appoint.db.command.GetAppointmentById;
 import uta.mav.appoint.db.command.GetUserById;
 import uta.mav.appoint.db.command.SQLCmd;
+import uta.mav.appoint.login.AdvisorUser;
 import uta.mav.appoint.login.LoginUser;
 import uta.mav.appoint.team3.command.Email;
 import uta.mav.appoint.team3.command.NotificationCommand;
@@ -59,7 +60,11 @@ public class ViewAppointmentServlet extends HttpServlet{
 		else{
 			header = "templates/header.jsp";
 		}
-		
+		if(user instanceof AdvisorUser){
+			request.setAttribute("advisorUser", "true");
+		}else{
+			request.setAttribute("advisorUser", "false");
+		} 
 		request.setAttribute("includeHeader", header);
 		request.getRequestDispatcher("/WEB-INF/jsp/views/view_appointments.jsp").forward(request, response);
 	}
@@ -107,7 +112,7 @@ public class ViewAppointmentServlet extends HttpServlet{
 				session.setAttribute("appointments", appointments);
 				response.setHeader("Refresh","2; URL=appointments");
 				request.getRequestDispatcher("/WEB-INF/jsp/views/success.jsp").forward(request,response);
-
+				
 			}
 		catch(Exception e){
 			e.printStackTrace();

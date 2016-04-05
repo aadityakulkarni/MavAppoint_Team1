@@ -77,6 +77,7 @@ public class ManageAppointmentServlet extends HttpServlet{
 					a.setDescription(request.getParameter("description"));
 					a.setStudentId(request.getParameter("studentid"));
 					a.setAppointmentId(Integer.parseInt(request.getParameter("id2")));
+					a.setAdvisorComments(request.getParameter("comments"));
 					DatabaseManager dbm = new DatabaseManager();
 					Boolean result = dbm.updateAppointment(a);
 					if (result == true){
@@ -105,6 +106,6 @@ public class ManageAppointmentServlet extends HttpServlet{
 			header = "templates/header.jsp";
 		}
 		request.setAttribute("includeHeader", header);
-		request.getRequestDispatcher("/WEB-INF/jsp/views/advising.jsp").forward(request, response);
+		//request.getRequestDispatcher("/WEB-INF/jsp/views/advising.jsp").forward(request, response);
 	}
 }
