@@ -14,6 +14,7 @@ import uta.mav.appoint.beans.Appointment;
 import uta.mav.appoint.db.command.GetAppointmentById;
 import uta.mav.appoint.db.command.GetUserById;
 import uta.mav.appoint.db.command.SQLCmd;
+import uta.mav.appoint.login.AdminUser;
 import uta.mav.appoint.login.AdvisorUser;
 import uta.mav.appoint.login.LoginUser;
 import uta.mav.appoint.team3.command.Email;
@@ -60,7 +61,7 @@ public class ViewAppointmentServlet extends HttpServlet{
 		else{
 			header = "templates/header.jsp";
 		}
-		if(user instanceof AdvisorUser){
+		if(user instanceof AdvisorUser || user instanceof AdminUser){
 			request.setAttribute("advisorUser", "true");
 		}else{
 			request.setAttribute("advisorUser", "false");
