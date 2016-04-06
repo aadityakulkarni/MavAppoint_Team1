@@ -47,7 +47,8 @@ public class OutlookNotification extends NotificationCommand {
 		messageBodyPart.setHeader("Content-Class", "urn:content-  classes:calendarmessage");
 		messageBodyPart.setHeader("Content-ID", "calendar_message");
 		messageBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(buffer.toString(), "text/calendar")));// very
-																														// important
+																	
+		// important
 
 		// Create a Multipart
 		Multipart multipart = new MimeMultipart();
@@ -59,8 +60,9 @@ public class OutlookNotification extends NotificationCommand {
 		message.setContent(multipart);
 	}
 	
-	
-	public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");
+	//yyyyMMdd'T'HHmmss'Z'
+	public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
+	//public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");
 	public static SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	public OutlookNotification(String to_address, String advising_date, String start_time, String end_time,

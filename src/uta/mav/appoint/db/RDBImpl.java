@@ -276,6 +276,8 @@ public class RDBImpl implements DBImplInterface{
 					statement.setString(5, appointment.getAdvisingEndTime());
 					statement.executeUpdate();
 					result.put("response", "success");
+					result.put("appointmentId", appointment.getAppointmentId()+"");
+					
 				}
 			}
 			conn.close();
