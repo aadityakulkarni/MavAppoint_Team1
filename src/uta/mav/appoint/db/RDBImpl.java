@@ -276,6 +276,8 @@ public class RDBImpl implements DBImplInterface{
 					statement.setString(5, appointment.getAdvisingEndTime());
 					statement.executeUpdate();
 					result.put("response", "success");
+					result.put("appointmentId", appointment.getAppointmentId()+"");
+					
 				}
 			}
 			conn.close();
@@ -364,9 +366,15 @@ public class RDBImpl implements DBImplInterface{
 			Connection conn = this.connectDB();
 			PreparedStatement statement;
 //			String command = "SELECT User_Advisor.pname,User_Advisor.email,date,start,end,type,id FROM Appointments INNER JOIN User_Advisor "
-					String command = "SELECT User_Advisor.pname,User.email,date,start,end,type,id FROM Appointments INNER JOIN User_Advisor "
-						+"WHERE User_Advisor.userid = Appointments.advisor_userid";
+					String command = "SELECT User_Advisor.pname,User.email,date,start,end,type,id,"
+							+ "description,student_email, student_cell,studentId,comments FROM USER,Appointments,"
+							+ "User_Advisor WHERE advisor_userId in "
+							+ "(select user_advisor.userId from user_advisor Inner JOin "
+							+ "department_user on department_user.userId = user_advisor.userId "
+							+ "where department_user.name in (select du.name from user u "
+							+ "inner join department_user du on du.userId = u.userId where u.userId =?))";
 			statement = conn.prepareStatement(command);
+			statement.setLong(1, user.getUserId());
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()){
 				Appointment set = new Appointment();
@@ -377,6 +385,11 @@ public class RDBImpl implements DBImplInterface{
 				set.setAdvisingEndTime(rs.getString(5));
 				set.setAppointmentType(rs.getString(6));
 				set.setAppointmentId(rs.getInt(7));
+				set.setDescription(rs.getString(8));
+				set.setStudentEmail(rs.getString(9));
+				set.setStudentPhoneNumber(rs.getString(10));
+				set.setStudentid(rs.getString(11));
+				set.setAdvisorComments(rs.getString(12));
 				Appointments.add(set);
 			}
 			conn.close();

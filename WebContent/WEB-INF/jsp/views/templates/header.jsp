@@ -3,6 +3,7 @@
 	<ul class="nav navbar-nav">
 		<li><a href="advising"><font style="color: #e67e22" size="3">Advising</font>
 		</a></li>
+		
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
 
