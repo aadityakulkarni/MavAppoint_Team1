@@ -15,7 +15,7 @@ public class GetAppointmentById extends SQLCmd{
 	
 	public void queryDB(){
 		try{
-		String command = "SELECT date,start,end,type,description,studentId,student_email,student_cell,advisor_userId,student_userId FROM appointments WHERE id=?";
+		String command = "SELECT us.email,u.pName,a.date,a.start,a.end,a.type,a.description,a.studentId,a.student_email,a.student_cell,a.advisor_userId,a.student_userId FROM appointments a inner join user_advisor u on u.userId=a.advisor_userId inner join user us on us.userId= u.userId WHERE id=?";
 		PreparedStatement statement = conn.prepareStatement(command);
 		statement.setInt(1,id);
 		res = statement.executeQuery();
@@ -30,6 +30,8 @@ public class GetAppointmentById extends SQLCmd{
 		try{
 			while (res.next()){
 				int i=1;
+				appointment.setAdvisorEmail(res.getString(i++));
+				appointment.setPname(res.getString(i++));
 				appointment.setAdvisingDate(res.getString(i++));
 				appointment.setAdvisingStartTime(res.getString(i++));
 				appointment.setAdvisingEndTime(res.getString(i++));
