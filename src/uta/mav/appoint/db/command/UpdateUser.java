@@ -16,7 +16,7 @@ public class UpdateUser extends SQLCmd {
 		
 		SQLCmd sqlCmd = new DeleteMajorsByUserId(loginUser.getUserId());
 		sqlCmd.execute();
-		sqlCmd = new AddMajorsByUserId(loginUser.getUserId(), loginUser.getMajors());
+		sqlCmd = new AddMajorsByUserId(loginUser.getUserId(), loginUser.getMajors(), loginUser.getMinor());
 		sqlCmd.execute();
 		
 		sqlCmd = new DeleteDepartmentsByUserId(loginUser.getUserId());
