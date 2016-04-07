@@ -809,7 +809,26 @@ public class RDBImpl implements DBImplInterface{
 		}
 		return "Updated successfully";
 	}
+	
+	@Override
+	public String editAppointmentType(AdvisorUser user, AppointmentType at) {
+		String msg = null;
+		SQLCmd cmd = new GetUserIDByEmail(user.getEmail());
+		cmd.execute();
+		cmd = new EditAppointmentType(at, (int) cmd.getResult().get(0));
+		cmd.execute();
+		return (String) cmd.getResult().get(0);
+	}
 
+	@Override
+	public String cancelAppointmentType(AdvisorUser user, AppointmentType at) {
+		String msg = null;
+		SQLCmd cmd = new GetUserIDByEmail(user.getEmail());
+		cmd.execute();
+		cmd = new CancelAppointmentType(at, (int) cmd.getResult().get(0));
+		cmd.execute();
+		return (String) cmd.getResult().get(0);
+	}
 
 	@Override
 	public String updateNotification(AdvisorUser user, String notification) {
