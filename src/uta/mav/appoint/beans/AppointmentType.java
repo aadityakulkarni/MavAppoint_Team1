@@ -10,6 +10,13 @@ public class AppointmentType implements Serializable{
 	String type;
 	int duration;
 	String email;
+	int userid;
+	public int getUserid() {
+		return userid;
+	}
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
 	/**
 	 * @return the type
 	 */

@@ -28,16 +28,22 @@ if(ats != null){ %>
 						<tr>
 							<th><font style="color: #0" size="4">Appointment Type</font></th>
 							<th><font style="color: #0" size="4">Duration</font></th>
+							<th><font style="color: #0" size="4">Action</font></th>
 						</tr>
 					</thead>
 					<%@ page import="uta.mav.appoint.beans.AppointmentType"%>
 					<%@ page import="java.util.ArrayList"%>
 					<%@ page import="uta.mav.appoint.beans.Appointment"%>
 					<!-- begin processing appointments  -->
-					<%for (int i=0;i<ats.size();i++){ %>
+					<%for (int i=0;i<ats.size();i++){
+						%>
 					<tr>
 						<td><font style="color: #0" size="3"><%=ats.get(i).getType()%></font></td>
 						<td><font style="color: #0" size="3"><%=ats.get(i).getDuration()%></font></td>
+						<td><a class="btn btn-link btn-xs" type="button" id="button1<%=i%>" href="/MavAppoint/cancel_edit_app_type?type=<%=ats.get(i).getType()%>&status=cancel">Cancel</a>
+							<a class="btn btn-link btn-xs" type="button" id="button2_<%=i%>" onclick="edit('<%=ats.get(i).getType()%>','<%=ats.get(i).getDuration()%>')" href="#" data-toggle="modal" data-target="#editApptType">Edit</a>
+						</td>
+						
 					</tr>
 					<%	}
 	    			%>
@@ -77,6 +83,39 @@ if(ats != null){ %>
 		</div>
 	</div>
 </form>
+
+<!-- Edit Appointment -->
+
+<form action="cancel_edit_app_type" method="get" onsubmit="return false;">
+	<div class="modal fade" id="editApptType" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"></button>
+					<h4 class="modal-title" id="addApptTypeLabel">Edit Appointment Type</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="apptypes">Appointment Type:</label>
+						<input type="text" disabled class="form-control" id="apptypes_edit" placeholder="">
+					</div>
+					<div class="form-group">
+						<label for="minutes">Minutes</label> <input type="number" class="form-control" id="minutes_edit" step="5" placeholder="">
+					</div>
+					<div>
+						<label id="result"><font style="color: #0" size="4"></font></label>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<input type="submit" value="submit" onclick="javascript:EditSubmit();">
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+
 <% } %>
 
 <div class="panel-body resize-body center-block">
@@ -121,9 +160,27 @@ if(ats != null){ %>
 									xmlhttp.open("POST","add_app_type",true);
 									xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 									xmlhttp.setRequestHeader("Content-length",params.length);
+									alert(params.length);
 									xmlhttp.setRequestHeader("Connection","close");
 									xmlhttp.send(params);
 									document.getElementById("result").innerHTML = "Adding appointment type...";
+								}
+								
+		function EditSubmit(){
+
+			var apptype = document.getElementById("apptypes_edit").value;
+			var minutes = document.getElementById("minutes_edit").value;
+			
+			window.location = "/MavAppoint/cancel_edit_app_type?apptypes="+apptype+"&minutes="+minutes+"&status=edit";
+		
+		}
+								
+								function edit(type,duration){
+									
+									document.getElementById('apptypes_edit').value = type;
+									document.getElementById('minutes_edit').value = duration;
+									
+									
 								}
 								</script>
 

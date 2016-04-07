@@ -51,7 +51,7 @@ public class CreateUser  extends SQLCmd{
 			loginUser.setUserId((int)cmd.getResult().get(0));
 			//System.out.println("Finished getting ID");
 			
-			cmd = new AddMajorsByUserId(loginUser.getUserId(), loginUser.getMajors(), loginUser.getMinor());
+			cmd = new AddMajorsByUserId(loginUser.getUserId(), loginUser.getMajors());
 			cmd.execute();
 			//System.out.println("Finished adding majors");
 			

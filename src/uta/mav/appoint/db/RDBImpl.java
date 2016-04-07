@@ -495,7 +495,7 @@ public class RDBImpl implements DBImplInterface{
 			try{
 			Connection conn = this.connectDB();
 			PreparedStatement statement;
-			String command = "SELECT type,duration,user.email FROM  Appointment_Types,User_Advisor,user WHERE Appointment_Types.userid=User_Advisor.userid AND User_Advisor.userid=user.userid AND User_Advisor.pname=?";
+			String command = "SELECT type,duration,user.email,Appointment_Types.userId FROM  Appointment_Types,User_Advisor,user WHERE Appointment_Types.userid=User_Advisor.userid AND User_Advisor.userid=user.userid AND User_Advisor.pname=?";
 			statement = conn.prepareStatement(command);
 			statement.setString(1,pname);
 			ResultSet rs = statement.executeQuery();
@@ -504,6 +504,7 @@ public class RDBImpl implements DBImplInterface{
 				at.setType(rs.getString(1));
 				at.setDuration(rs.getInt(2));
 				at.setEmail(rs.getString(3));
+				at.setUserid(rs.getInt(4));
 				ats.add(at);
 			}
 			conn.close();
@@ -581,6 +582,22 @@ public class RDBImpl implements DBImplInterface{
 		SQLCmd cmd = new GetUserIDByEmail(user.getEmail());
 		cmd.execute();
 		cmd = new AddAppointmentType(at, (int)cmd.getResult().get(0));
+		cmd.execute();
+		return (String)cmd.getResult().get(0);
+	}
+	public String editAppointmentType(AdvisorUser user, AppointmentType at){
+		String msg = null;
+		SQLCmd cmd = new GetUserIDByEmail(user.getEmail());
+		cmd.execute();
+		cmd = new EditAppointmentType(at, (int)cmd.getResult().get(0));
+		cmd.execute();
+		return (String)cmd.getResult().get(0);
+	}
+	public String cancelAppointmentType(AdvisorUser user, AppointmentType at){
+		String msg = null;
+		SQLCmd cmd = new GetUserIDByEmail(user.getEmail());
+		cmd.execute();
+		cmd = new CancelAppointmentType(at, (int)cmd.getResult().get(0));
 		cmd.execute();
 		return (String)cmd.getResult().get(0);
 	}

@@ -147,5 +147,17 @@ public class DatabaseManager {
 		} else
 			return null;
 	}
+	
+	public String editAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException{
+		return imp.editAppointmentType(user, at);
+	}
+	public String cancelAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException{
+		return imp.cancelAppointmentType(user, at);
+	}
+	
+	/*public String addAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException{
+		return imp.addAppointmentType(user, at);
+	}*/
+	
 }
 
