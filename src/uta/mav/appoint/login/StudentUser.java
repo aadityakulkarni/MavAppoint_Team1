@@ -10,6 +10,7 @@ public class StudentUser extends LoginUser{
 	private String phoneNumber;
 	private String lastNameInitial;
 	private String notification;
+	private String minor;
 
 	public StudentUser(String em){
 		super(em);
@@ -66,5 +67,19 @@ public class StudentUser extends LoginUser{
 	@Override
 	public void setNotification(String notification) {
 		this.notification = notification;
+	}
+
+	/**
+	 * @return the minor
+	 */
+	public String getMinor() {
+		return minor;
+	}
+
+	/**
+	 * @param minor the minor to set
+	 */
+	public void setMinor(String minor) {
+		this.minor = minor;
 	}
 }

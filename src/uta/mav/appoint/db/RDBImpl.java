@@ -330,7 +330,7 @@ public class RDBImpl implements DBImplInterface{
 			Connection conn = this.connectDB();
 			PreparedStatement statement;
 //			String command = "SELECT User_Advisor.pname,User_Advisor.email,date,start,end,type,id,description,student_email FROM USER,Appointments,User_Advisor "
-					String command = "SELECT User_Advisor.pname,User.email,date,start,end,type,id,description,student_email, student_cell FROM USER,Appointments,User_Advisor "
+					String command = "SELECT User_Advisor.pname,User.email,date,start,end,type,id,description,student_email, student_cell,User_Advisor.userid FROM USER,Appointments,User_Advisor "
 						+ "WHERE USER.email=? AND user.userid=Appointments.student_userid AND User_Advisor.userid=Appointments.advisor_userid";
 			statement = conn.prepareStatement(command);
 			statement.setString(1, user.getEmail());
@@ -338,7 +338,7 @@ public class RDBImpl implements DBImplInterface{
 			while(rs.next()){
 				Appointment set = new Appointment();
 				set.setPname(rs.getString(1));
-				set.setAdvisorEmail(rs.getString(2));
+				//set.setAdvisorEmail(rs.getString(2));
 				set.setAdvisingDate(rs.getString(3));
 				set.setAdvisingStartTime(rs.getString(4));
 				set.setAdvisingEndTime(rs.getString(5));
@@ -348,6 +348,15 @@ public class RDBImpl implements DBImplInterface{
 				set.setStudentId("Advisor only");
 				set.setStudentEmail(rs.getString(9));
 				set.setStudentPhoneNumber(rs.getString(10));
+				int advisorId = rs.getInt(11);
+				command = "select u.email from user u where u.userId=?";
+				statement = conn.prepareStatement(command);
+				statement.setInt(1, advisorId);
+				ResultSet innerQueryResult = statement.executeQuery();
+				if(innerQueryResult.next()){
+					set.setAdvisorEmail(innerQueryResult.getString(1));	
+				}
+				
 				Appointments.add(set);
 			}
 			conn.close();
@@ -366,13 +375,7 @@ public class RDBImpl implements DBImplInterface{
 			Connection conn = this.connectDB();
 			PreparedStatement statement;
 //			String command = "SELECT User_Advisor.pname,User_Advisor.email,date,start,end,type,id FROM Appointments INNER JOIN User_Advisor "
-					String command = "SELECT User_Advisor.pname,User.email,date,start,end,type,id,"
-							+ "description,student_email, student_cell,studentId,comments FROM USER,Appointments,"
-							+ "User_Advisor WHERE advisor_userId in "
-							+ "(select user_advisor.userId from user_advisor Inner JOin "
-							+ "department_user on department_user.userId = user_advisor.userId "
-							+ "where department_user.name in (select du.name from user u "
-							+ "inner join department_user du on du.userId = u.userId where u.userId =?))";
+					String command = "SELECT User_Advisor.pname,User.email,date,start,end,type,id,description,student_email, student_cell,studentId,comments FROM USER inner join Appointments on Appointments.advisor_userId=USER.userId inner join User_Advisor on User_Advisor.userId = Appointments.advisor_userId WHERE advisor_userId in (select user_advisor.userId from user_advisor Inner JOin department_user on department_user.userId = user_advisor.userId where department_user.name in (select du.name from user u inner join department_user du on du.userId = u.userId where u.userId =?))";
 			statement = conn.prepareStatement(command);
 			statement.setLong(1, user.getUserId());
 			ResultSet rs = statement.executeQuery();
@@ -495,7 +498,7 @@ public class RDBImpl implements DBImplInterface{
 			try{
 			Connection conn = this.connectDB();
 			PreparedStatement statement;
-			String command = "SELECT type,duration,user.email,Appointment_Types.userId FROM  Appointment_Types,User_Advisor,user WHERE Appointment_Types.userid=User_Advisor.userid AND User_Advisor.userid=user.userid AND User_Advisor.pname=?";
+			String command = "SELECT type,duration,user.email FROM  Appointment_Types,User_Advisor,user WHERE Appointment_Types.userid=User_Advisor.userid AND User_Advisor.userid=user.userid AND User_Advisor.pname=?";
 			statement = conn.prepareStatement(command);
 			statement.setString(1,pname);
 			ResultSet rs = statement.executeQuery();
@@ -504,7 +507,6 @@ public class RDBImpl implements DBImplInterface{
 				at.setType(rs.getString(1));
 				at.setDuration(rs.getInt(2));
 				at.setEmail(rs.getString(3));
-				at.setUserid(rs.getInt(4));
 				ats.add(at);
 			}
 			conn.close();
@@ -582,22 +584,6 @@ public class RDBImpl implements DBImplInterface{
 		SQLCmd cmd = new GetUserIDByEmail(user.getEmail());
 		cmd.execute();
 		cmd = new AddAppointmentType(at, (int)cmd.getResult().get(0));
-		cmd.execute();
-		return (String)cmd.getResult().get(0);
-	}
-	public String editAppointmentType(AdvisorUser user, AppointmentType at){
-		String msg = null;
-		SQLCmd cmd = new GetUserIDByEmail(user.getEmail());
-		cmd.execute();
-		cmd = new EditAppointmentType(at, (int)cmd.getResult().get(0));
-		cmd.execute();
-		return (String)cmd.getResult().get(0);
-	}
-	public String cancelAppointmentType(AdvisorUser user, AppointmentType at){
-		String msg = null;
-		SQLCmd cmd = new GetUserIDByEmail(user.getEmail());
-		cmd.execute();
-		cmd = new CancelAppointmentType(at, (int)cmd.getResult().get(0));
 		cmd.execute();
 		return (String)cmd.getResult().get(0);
 	}

@@ -18,6 +18,7 @@ public class LoginUser {
 	private ArrayList<String> departments;
 	private Integer degType;
 	private String email;
+	private String minor;
 	private String msg;
 	
 	public LoginUser(){
@@ -181,6 +182,20 @@ public class LoginUser {
 
 	public void setNotification(String notification) {
 		// TODO Auto-generated method stub	
+	}
+
+	/**
+	 * @return the minor
+	 */
+	public String getMinor() {
+		return minor;
+	}
+
+	/**
+	 * @param minor the minor to set
+	 */
+	public void setMinor(String minor) {
+		this.minor = minor;
 	}
 	
 	
