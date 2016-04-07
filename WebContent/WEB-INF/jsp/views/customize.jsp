@@ -40,7 +40,7 @@ if(ats != null){ %>
 					<tr>
 						<td><font style="color: #0" size="3"><%=ats.get(i).getType()%></font></td>
 						<td><font style="color: #0" size="3"><%=ats.get(i).getDuration()%></font></td>
-						<td><a class="btn btn-link btn-xs" type="button" id="button1<%=i%>" href="/MavAppoint/cancel_edit_app_type?type=<%=ats.get(i).getType()%>&status=cancel">Cancel</a>
+						<td><a class="btn btn-link btn-xs" type="button" id="button1<%=i%>" href="/MavAppoint/cancel_edit_app_type?type=<%=ats.get(i).getType()%>&status=cancel">Delete</a>
 							<a class="btn btn-link btn-xs" type="button" id="button2_<%=i%>" onclick="edit('<%=ats.get(i).getType()%>','<%=ats.get(i).getDuration()%>')" href="#" data-toggle="modal" data-target="#editApptType">Edit</a>
 						</td>
 						
