@@ -44,9 +44,11 @@ public class ScheduleAppointmentController {
 		if("success".equalsIgnoreCase(result.get("response"))){
 			if("yes".equalsIgnoreCase(result.get("student_notify"))){
 				notifyEmail.setSubject("Advising appointment with: " + a.getPname());
-				notifyEmail.setText("\nAn appointment has been set for " + a.getAdvisingDate()
+				notifyEmail.setText("\n\nAn appointment has been set for " + a.getAdvisingDate()
 			+ " at " + a.getAdvisingStartTime() + " - " + a.getAdvisingEndTime() +
-			"\nTo Cancel this appointment please click on the link below:"+
+			"\n\nTo View this appointment please click on the link below:"+
+			"\nhttp://localhost:8080/MavAppoint/viewGuestAppointment?viewApt="+result.get("appointmentId") +
+			"\n\nTo Cancel this appointment please click on the link below:"+
 			"\nhttp://localhost:8080/MavAppoint/cancel?id="+result.get("appointmentId"));
 				notifyEmail.setTo_address(email);
 				NotificationCommand command = notifyEmail;

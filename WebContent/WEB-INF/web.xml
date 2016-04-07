@@ -170,4 +170,12 @@
 		<servlet-name>CancelAppointmentServlet</servlet-name>
 		<servlet-class>uta.mav.appoint.CancelAppointmentServlet</servlet-class>
 	</servlet>
+	  <servlet>
+    <servlet-name>ViewGuestAppointmentServlet</servlet-name>
+    <servlet-class>uta.mav.appoint.ViewGuestAppointmentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewGuestAppointmentServlet</servlet-name>
+    <url-pattern>/viewGuestAppointment</url-pattern>
+  </servlet-mapping>
 </web-app>

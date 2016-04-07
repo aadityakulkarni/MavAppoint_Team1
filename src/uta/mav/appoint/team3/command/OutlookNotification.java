@@ -4,6 +4,8 @@ package uta.mav.appoint.team3.command;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 import javax.activation.DataHandler;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -61,7 +63,9 @@ public class OutlookNotification extends NotificationCommand {
 	}
 	
 	//yyyyMMdd'T'HHmmss'Z'
-	public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
+	
+	public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
+	
 	//public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");
 	public static SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
@@ -69,6 +73,7 @@ public class OutlookNotification extends NotificationCommand {
 			String subject, String advisorName) {
 		super();
 		this.to_address = to_address;
+		dateFormat.setTimeZone(TimeZone.getTimeZone("Z"));
 		try {
 			this.start_time = dateFormat.format(dateParser.parse(advising_date + " " + start_time));
 			this.end_time = dateFormat.format(dateParser.parse(advising_date + " " + end_time));
