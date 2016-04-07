@@ -132,7 +132,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							Close</button>
-						<input type="button" value="submit"
+						<input type="submit" value="submit"
 							onclick="javascript:validate();">
 					</div>
 				</div>

@@ -38,7 +38,7 @@ width: 80%;
 							
 					        <label for="drp_department"><font color="#0" size="4">Departments</font></label> 
 							<br>
-							<select id="drp_department" name="drp_department" class="btn btn-default btn-lg dropdown-toggle" multiple>
+							<select onchange="change();" id="drp_department" name="drp_department" class="btn btn-default btn-lg dropdown-toggle">
 								<%
 								for (int i=0;i<departments.size();i++)
 								{%>
@@ -57,28 +57,14 @@ width: 80%;
 							
 					        <label for="drp_degreeType"><font color="#0" size="4">Degree Type</font></label> 
 							<br>
-							<select id="drp_degreeType" onchange="checkBachelor();" name="drp_degreeType" class="btn btn-default btn-lg dropdown-toggle">
+							<select id="drp_degreeType" name="drp_degreeType" class="btn btn-default btn-lg dropdown-toggle">
 								<%
 												for (int i=0, j=1;i<degreeType.size();i++, j*=2){
 													
 													%>
 										<option value=<%=j%>><%=degreeType.get(i)%></option>
 										<%	}%>
-							</select>
-							
-							 
-							<script> 
-							function checkBachelor()
-							{
-								console.log(document.getElementById("drp_degreeType").value);
-								if(document.getElementById("drp_degreeType").value == '1'){
-									document.getElementById('minorDB').style.display = 'block';								
-								}else{
-									document.getElementById('minorDB').style.display = 'none';
-								}
-							}
-							</script>
-							
+							</select> 
 							<br>
 					
 					        <label for="drp_major"><font color="#0" size="4">Major</font></label> 
@@ -90,32 +76,16 @@ width: 80%;
 													%>
 										<option value=<%=i%>><%=major.get(i)%></option>
 										<%	}%>
-							</select>
-
-						<div id="minorDB">
-							<br> <label for="drp_minor"><font color="#0"
-								size="4">Minor</font></label> <br> <select id="drp_minor"
-								name="drp_minor" class="btn btn-default btn-lg dropdown-toggle">
-								<%
-									for (int i = 0; i < major.size(); i++) {
-								%>
-								<option value=<%=i%>><%=major.get(i)%></option>
-								<%
-									}
-								%>
-							</select>
-						</div>
-
-						<br>
-							
-					        <label for="drp_last_name_initial"><font color="#0" size="4">Last Name</font></label> 
+							</select> 
 							<br>
-							<input id="drp_last_name_initial" name="drp_last_name_initial" class="form-control" type="text"/>
-							<%-- <select id="drp_last_name_initial" name="drp_last_name_initial" class="btn btn-default btn-lg dropdown-toggle">
+							
+					        <label for="drp_last_name_initial"><font color="#0" size="4">Last Name Initial</font></label> 
+							<br>
+							<select id="drp_last_name_initial" name="drp_last_name_initial" class="btn btn-default btn-lg dropdown-toggle">
 								<% for (char letter='A';letter<='Z';letter++){ %>
 										<option value=<%=letter%>><%=letter%></option>
 								<%	}%>
-							</select>  --%>
+							</select> 
 							<br>
 							
 							<label for="student_Id"><font color="#0" size="4">Student ID</font></label> 

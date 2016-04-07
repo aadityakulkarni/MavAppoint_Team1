@@ -244,4 +244,18 @@ public class PostgresImpl implements DBImplInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public String editAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String cancelAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

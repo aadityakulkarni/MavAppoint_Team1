@@ -53,5 +53,8 @@ public interface DBImplInterface {
 	public boolean deleteAdvisor(String advisorList);
 	public String updateNotification(StudentUser user, String notification);
 	public String updateNotification(AdvisorUser user, String notification);
+	public String editAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException;
+	public String cancelAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException;
+	
 	
 }

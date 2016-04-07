@@ -178,4 +178,12 @@
     <servlet-name>ViewGuestAppointmentServlet</servlet-name>
     <url-pattern>/viewGuestAppointment</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>EditDeleteAptTypeServlet</servlet-name>
+    <servlet-class>uta.mav.appoint.EditDeleteAptTypeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditDeleteAptTypeServlet</servlet-name>
+    <url-pattern>/cancel_edit_app_type</url-pattern>
+  </servlet-mapping>
 </web-app>
