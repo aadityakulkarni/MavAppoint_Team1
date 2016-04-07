@@ -13,6 +13,8 @@ public class CalendarInvite {
 			.append("METHOD:REQUEST\n")
 			.append("BEGIN:VEVENT\n")
 			.append("ATTENDEE;ROLE=REQ-PARTICIPANT;RSVP=TRUE:MAILTO:<TO_ADDRESS>\n")
+			//.append("TZID:America/Chicago\n")
+			.append("DTSTAMP:<START_TIME>\n")
 			.append("DTSTART:<START_TIME>\n")
 			.append("DTEND:<END_TIME>\n")
 			.append("LOCATION:OFFICE OF <ADVISOR_NAME>\n")

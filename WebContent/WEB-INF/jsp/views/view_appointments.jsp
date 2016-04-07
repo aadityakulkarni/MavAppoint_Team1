@@ -3,8 +3,8 @@
 <style>
 .custab {
 	border: 1px solid #ccc;
-	padding: 5px;
-	margin: 5% 0;
+	padding: 1px;
+	margin: 1% 0;
 	box-shadow: 3px 3px 2px #ccc;
 	transition: 0.5s;
 	background-color: #e67e22;
@@ -15,14 +15,16 @@
 	transition: 0.5s;
 }
 </style>
-<%String userType = (String) request.getAttribute("advisorUser"); %>
+<%
+	String userType = (String) request.getAttribute("advisorUser");
+%>
 
 <div class="container">
 	<div class="btn-group">
 		<form action="appointments" method="post" name="cancel">
 			<input type=hidden name=cancel_button id="cancel_button"> <input
 				type=hidden name=edit_button id="edit_button">
-			<div class="row col-md-12  custyle">
+			<div class="row col-md-12">
 				<table class="table table-striped custab">
 					<thead>
 						<tr>
@@ -35,28 +37,34 @@
 							<th>Description</th>
 							<th>UTA Student ID</th>
 							<th>Student Email</th>
-							
-							
-							
-							
+
+
+
+
 							<!-- This adds "Phone Number" to the table  -->
-							<th>Phone Number</th> 
-							
-							
-							<%if(userType.equalsIgnoreCase("true")){
-							
-						 %>
+							<th>Phone Number</th>
+
+
+							<%
+								if (userType.equalsIgnoreCase("true")) {
+							%>
 							<th class="text-center">Comments</th>
-							<%} %>
+							<%
+								}
+							%>
 							<th class="text-center">Action</th>
 						</tr>
 					</thead>
 					<%@ page import="java.util.ArrayList"%>
 					<%@ page import="uta.mav.appoint.beans.Appointment"%>
 					<!-- begin processing appointments  -->
-					<% ArrayList<Appointment> array = (ArrayList<Appointment>)session.getAttribute("appointments");
-		    			if (array != null){%>
-					<%for (int i=0;i<array.size();i++){ %>
+					<%
+						ArrayList<Appointment> array = (ArrayList<Appointment>) session.getAttribute("appointments");
+						if (array != null) {
+					%>
+					<%
+						for (int i = 0; i < array.size(); i++) {
+					%>
 					<tr>
 						<td><%=array.get(i).getPname()%></td>
 						<td><%=array.get(i).getAdvisingDate()%></td>
@@ -64,31 +72,32 @@
 						<td><%=array.get(i).getAdvisingEndTime()%></td>
 						<td><%=array.get(i).getAppointmentType()%></td>
 						<td><%=array.get(i).getAdvisorEmail()%></td>
-						<td><%=array.get(i).getDescription() %></td>
+						<td><%=array.get(i).getDescription()%></td>
 						<td><%=array.get(i).getStudentId()%></td>
 						<td><%=array.get(i).getStudentEmail()%></td>
-						
-						
-						
+
+
+
 						<!-- =array.get(i).getstudentPhoneNumber() -->
 						<td><%=array.get(i).getStudentPhoneNumber()%></td>
 						<!-- added by aaditya  -->
-						<%if(userType.equalsIgnoreCase("true")){
-							
-						 %>
+						<%
+							if (userType.equalsIgnoreCase("true")) {
+						%>
 						<td><%=array.get(i).getAdvisorComments()%></td>
-						<%} %>
-						
-						
-						
-						
-						
-						<td class="text-center"><button type="button" id=button1
-								<%=i%> onclick="button<%=i%>()">Cancel</button></td>
-						<td class="text-center"><button type="button" id=button2_
-								<%=i%> onclick="button_<%=i%>()">Edit</button></td>
-						<td class="text-center"><button type="button" id=button3_
-								<%=i%> onclick="button__<%=i%>()">Email</button></td>
+						<%
+							}
+						%>
+
+
+
+
+
+						<td class="text-center">
+							<button class="btn btn-link btn-xs" type="button" id="button1<%=i%>" onclick="button<%=i%>()">Cancel</button>
+							<button class="btn btn-link btn-xs" type="button" id="button2_<%=i%>" onclick="button_<%=i%>()">Edit</button>
+							<button class="btn btn-link btn-xs" type="button" id="button3_<%=i%>" onclick="button__<%=i%>()">Email</button>
+						</td>
 					</tr>
 					<script> function button<%=i%>(){
 										document.getElementById("cancel_button").value = "<%=array.get(i).getAppointmentId()%>"; 
@@ -97,23 +106,25 @@
 										}
 								}</script>
 					<script> function button_<%=i%>(){
-										document.getElementById("id2").value = "<%=array.get(i).getAppointmentId()%>"; 
-										document.getElementById("apptype").value = "<%=array.get(i).getAppointmentType()%>"; 
-										document.getElementById("date").value = "<%=array.get(i).getAdvisingDate()%>";
-										document.getElementById("start").value = "<%=array.get(i).getAdvisingStartTime()%>"; 
-										document.getElementById("end").value = "<%=array.get(i).getAdvisingEndTime()%>"; 
-										document.getElementById("pname").value = "<%=array.get(i).getPname()%>"; 
-										document.getElementById("description").value = "<%=array.get(i).getDescription()%>";
+										document.getElementById("id2").value = '<%=array.get(i).getAppointmentId()%>'; 
+										document.getElementById("apptype").value = '<%=array.get(i).getAppointmentType()%>'; 
+										document.getElementById("date").value = '<%=array.get(i).getAdvisingDate()%>';
+										document.getElementById("start").value = '<%=array.get(i).getAdvisingStartTime()%>'; 
+										document.getElementById("end").value = '<%=array.get(i).getAdvisingEndTime()%>'; 
+										document.getElementById("pname").value = '<%=array.get(i).getPname()%>'; 
+										var a ='<%=array.get(i).getDescription().replace("\n", " ").replace("\r", " ")%>';
+											//t.replace(/[\n\r]+/g, '');
+										document.getElementById("description").value = a;
 										
 										
 										
 										
 										//<Hien>
 										document.getElementById("StudentPhoneNumber").value = "<%=array.get(i).getStudentPhoneNumber()%>";
-										<%if(userType.equalsIgnoreCase("true")){%>				
+										<%if (userType.equalsIgnoreCase("true")) {%>				
 											 document.getElementById("comments").value = "<%=array.get(i).getAdvisorComments()%>";
 												
-										<% } %>					
+										<%}%>					
 										
 										
 										$('#addApptModal').modal();
@@ -143,9 +154,10 @@
 								}
 								</script>
 					</div>
-					<%	}
-		    			}
-		    			%>
+					<%
+						}
+						}
+					%>
 					<!-- end processing advisors -->
 				</table>
 		</form>
@@ -167,23 +179,23 @@
 					<b>Start: </b><input type="label" name=start id="start" readonly><br>
 					<b>End: </b><input type="label" name=end id="end" readonly><br>
 					<b>Advisor: </b><input type="label" name=pname id="pname" readonly><br>
-					
-					
-					
-					
-					<b>Phone Number: </b> <input type="label" name=StudentPhoneNumber id="StudentPhoneNumber" readonly><br>
-					
-					
-					
-					<b>UTA Student ID: </b><br> <input type="text" name=studentid
+
+
+
+
+					<b>Phone Number: </b> <input type="label" name=StudentPhoneNumber
+						id="StudentPhoneNumber" readonly><br> <b>UTA
+						Student ID: </b><br> <input type="text" name=studentid
 						id="studentid"><br> <b>Description:</b><br>
 					<textarea rows=4 columns="10" name=description id="description"></textarea>
-					<%if(userType.equalsIgnoreCase("true")){
-							
-						 %>
+					<%
+						if (userType.equalsIgnoreCase("true")) {
+					%>
 					<b>Comments:</b><br>
 					<textarea rows=4 columns="10" name=comments id="comments"></textarea>
-					<% }  %>
+					<%
+						}
+					%>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">

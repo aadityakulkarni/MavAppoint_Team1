@@ -37,7 +37,8 @@ public class GetAppointmentById extends SQLCmd{
 				appointment.setAdvisingEndTime(res.getString(i++));
 				appointment.setAppointmentType(res.getString(i++));
 				appointment.setDescription(res.getString(i++));
-				appointment.setStudentId(res.getString(i++));
+				appointment.setStudentId("Advisor Only");
+				i++;
 				appointment.setStudentEmail(res.getString(i++));
 				appointment.setStudentPhoneNumber(res.getString(i++));
 				appointment.setAdvisorUserId(res.getInt(i++));
