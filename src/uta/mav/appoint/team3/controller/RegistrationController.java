@@ -20,8 +20,11 @@ import uta.mav.appoint.team3fall.util.Util;
  */
 public class RegistrationController {
 	
-	public static String registerStudent(String email, String phoneNumber, String studentId, String lastNameInitial, String degreeType, 
-			ArrayList<String> departmentsSelected, ArrayList<String> majorsSelected) throws SQLException{
+	public static String registerStudent(String email, String phoneNumber, String studentId, String lastName, String degreeType, 
+			ArrayList<String> departmentsSelected, ArrayList<String> majorsSelected, String minor) throws SQLException{
+		
+		if(Util.isEmpty(lastName))
+			return "Invalid Last Name";
 		
 		if(!Util.validateEmail(email))
 			return "Email Address Invalid";
@@ -52,11 +55,12 @@ public class RegistrationController {
 		studentUser.setEmail(email);
 		studentUser.setPhoneNumber(phoneNumber);
 		studentUser.setRole("student");
-		studentUser.setLastNameInitial(lastNameInitial);
+		studentUser.setLastNameInitial(lastName.substring(0,1).toUpperCase());
 		studentUser.setDepartments(departmentsSelected);
 		studentUser.setMajors(majorsSelected);
 		studentUser.setDegType(Integer.parseInt(degreeType));
 		studentUser.setNotification("yes");
+		studentUser.setMinor(minor);
 		
 		String password = RandomPasswordGenerator.genpass();
 		studentUser.setPassword(password);
