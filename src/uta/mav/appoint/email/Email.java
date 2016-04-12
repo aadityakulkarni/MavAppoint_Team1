@@ -17,7 +17,7 @@ public class Email {
 	}
 	public void sendMail()
 	{
-		final String user = "team3sdp@gmail.com";
+		final String user = "team1sdps16@gmail.com";
         final String pass = "Team1SDP";
  
         Properties props = new Properties();

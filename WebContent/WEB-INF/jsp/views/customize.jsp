@@ -160,7 +160,7 @@ if(ats != null){ %>
 									xmlhttp.open("POST","add_app_type",true);
 									xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 									xmlhttp.setRequestHeader("Content-length",params.length);
-									alert(params.length);
+									//alert(params.length);
 									xmlhttp.setRequestHeader("Connection","close");
 									xmlhttp.send(params);
 									document.getElementById("result").innerHTML = "Adding appointment type...";
