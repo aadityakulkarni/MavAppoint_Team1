@@ -22,6 +22,7 @@ import uta.mav.appoint.flyweight.TimeSlotFlyweightFactory;
 import uta.mav.appoint.helpers.TimeSlotHelpers;
 import uta.mav.appoint.login.*;
 import uta.mav.appoint.team3fall.singleton.ConfigFileReader;
+import uta.mav.appoint.team3fall.util.Util;
 
 /**
  * Bridge Pattern Concrete class: Connect to MySQL
@@ -190,54 +191,55 @@ public class RDBImpl implements DBImplInterface{
 		return timeSlots;
 	}
 
-	public HashMap<String, String> createAppointment(Appointment appointment, String email){
+	public HashMap<String, String> createAppointment(Appointment appointment,
+			String email) {
 		HashMap<String, String> result = new HashMap<String, String>();
 		int student_id = 0;
 		int advisor_id = 0;
-		try{
+		try {
 			Connection conn = this.connectDB();
 			PreparedStatement statement;
 			String command = "SELECT userid from user where email=?";
-			statement=conn.prepareStatement(command);
-			statement.setString(1,email);
+			statement = conn.prepareStatement(command);
+			statement.setString(1, email);
 			ResultSet rs = statement.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				student_id = rs.getInt(1);
 			}
-			
+
 			command = "SELECT notification from user_student where userId=?";
-			statement=conn.prepareStatement(command);
-			statement.setInt(1,student_id);
+			statement = conn.prepareStatement(command);
+			statement.setInt(1, student_id);
 			rs = statement.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				result.put("student_notify", rs.getString("notification"));
 			}
-			
+
 			command = "SELECT userid FROM User_Advisor WHERE User_Advisor.pname=?";
-			statement=conn.prepareStatement(command);
+			statement = conn.prepareStatement(command);
 			statement.setString(1, appointment.getPname());
 			rs = statement.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				advisor_id = rs.getInt(1);
 			}
-			
+
 			command = "SELECT notification from user_advisor where userId=?";
-			statement=conn.prepareStatement(command);
-			statement.setInt(1,advisor_id);
+			statement = conn.prepareStatement(command);
+			statement.setInt(1, advisor_id);
 			rs = statement.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				result.put("advisor_notify", rs.getString("notification"));
 			}
-			
+
 			command = "SELECT email from user where userId=?";
-			statement=conn.prepareStatement(command);
-			statement.setInt(1,advisor_id);
+			statement = conn.prepareStatement(command);
+			statement.setInt(1, advisor_id);
 			rs = statement.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				result.put("advisor_email", rs.getString("email"));
 			}
-			
-			//check for slots already taken
+
+			// check for slots already taken
 			command = "SELECT COUNT(*) FROM Advising_Schedule WHERE userid=? AND date=? AND start=? AND end=? AND studentId is not null";
 			statement = conn.prepareStatement(command);
 			statement.setInt(1, advisor_id);
@@ -245,45 +247,51 @@ public class RDBImpl implements DBImplInterface{
 			statement.setString(3, appointment.getAdvisingStartTime());
 			statement.setString(4, appointment.getAdvisingEndTime());
 			rs = statement.executeQuery();
-			while(rs.next()){
-				if (rs.getInt(1) < 1){
+			while (rs.next()) {
+				if (rs.getInt(1) < 1) {
 					command = "INSERT INTO Appointments (id,advisor_userid,student_userid,date,start,end,type,studentId,description,student_email,student_cell)"
-							+"VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+							+ "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 					statement = conn.prepareStatement(command);
 					statement.setInt(1, appointment.getAppointmentId());
-					statement.setInt(2,advisor_id);
-					statement.setInt(3,student_id);
-					statement.setString(4,appointment.getAdvisingDate());
-					statement.setString(5,appointment.getAdvisingStartTime());
-					statement.setString(6,appointment.getAdvisingEndTime());
-					statement.setString(7,appointment.getAppointmentType());
-					statement.setInt(8,Integer.parseInt(appointment.getStudentId()));
-					statement.setString(9,appointment.getDescription());
-					statement.setString(10,email);
-					statement.setString(11,appointment.getStudentPhoneNumber());
-					
-					//System.out.println("Update about to execute");
+					statement.setInt(2, advisor_id);
+					statement.setInt(3, student_id);
+					statement.setString(4, appointment.getAdvisingDate());
+					statement.setString(5, appointment.getAdvisingStartTime());
+					statement.setString(6, appointment.getAdvisingEndTime());
+					statement.setString(7, appointment.getAppointmentType());
+					if (!Util.isEmpty(appointment.getStudentId())) {
+						statement.setString(8,appointment.getStudentId());
+					}else{
+						statement.setString(8,null);
+					}
+					statement.setString(9, appointment.getDescription());
+					statement.setString(10, email);
+					statement
+							.setString(11, appointment.getStudentPhoneNumber());
+
+					// System.out.println("Update about to execute");
 					statement.executeUpdate();
-					//System.out.println("Should have set "+appointment.getStudentPhoneNumber());
-					//System.out.println("Update should have executed");
-					
+					// System.out.println("Should have set "+appointment.getStudentPhoneNumber());
+					// System.out.println("Update should have executed");
+
 					command = "UPDATE Advising_Schedule SET studentId=? where userid=? AND date=? and start >= ? and end <= ?";
-					statement=conn.prepareStatement(command);
-					statement.setInt(1,Integer.parseInt(appointment.getStudentId()));
+					statement = conn.prepareStatement(command);
+					String studentId = Util.isEmpty(appointment.getStudentId())?"-1":appointment.getStudentId();
+					statement.setString(1, studentId);
 					statement.setInt(2, advisor_id);
 					statement.setString(3, appointment.getAdvisingDate());
 					statement.setString(4, appointment.getAdvisingStartTime());
 					statement.setString(5, appointment.getAdvisingEndTime());
 					statement.executeUpdate();
 					result.put("response", "success");
-					result.put("appointmentId", appointment.getAppointmentId()+"");
-					
+					result.put("appointmentId", appointment.getAppointmentId()
+							+ "");
+
 				}
 			}
 			conn.close();
-		}
-		catch(Exception e){
-			//System.out.printf(e.toString());
+		} catch (Exception e) {
+			System.out.printf(e.toString());
 		}
 		return result;
 	}
