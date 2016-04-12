@@ -87,10 +87,23 @@
 						id="endtime"> <input type="hidden" name=pname id="pname">
 					<input type="hidden" name=duration id="duration"> <input
 						type="hidden" name=advisor_email id="advisor_email"> Email
-					address: <br> <input type="text" name="email" id="email"
-						value="<%= user.getEmail()%>"><br> UTA Student ID: <br>
-					<input type="text" name="studentid"> <br> Phone
-					Number: <br> <input type="text" name="phoneNumber"> <br>
+					address: <br> 
+					
+					<%
+						String studentId = "", phoneNumber = "", studentEmail = "";
+						if(user.getRole().equalsIgnoreCase("student")){
+							StudentUser student = (StudentUser) user;
+							if(student.getStudentId() != null){
+								studentId = student.getStudentId().toString();								
+							}
+							phoneNumber = student.getPhoneNumber();
+							studentEmail = student.getEmail();
+						} %>
+					
+					<input type="text" name="email" id="email"
+						value="<%= studentEmail%>"><br> UTA Student ID: <br>
+					<input type="text" name="studentid" value="<%= studentId%>"> <br> Phone
+					Number: <br> <input type="text" name="phoneNumber" value="<%= phoneNumber%>"> <br>
 					Description: <br>
 					<textarea rows=4 columns="10" name="description"></textarea>
 				</div>
