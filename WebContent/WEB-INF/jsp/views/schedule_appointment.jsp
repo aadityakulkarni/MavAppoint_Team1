@@ -91,11 +91,9 @@
 					
 					<%
 						String studentId = "", phoneNumber = "", studentEmail = "";
-						if(user.getRole().equalsIgnoreCase("student")){
+						if(user.getRole() != null && user.getRole().equalsIgnoreCase("student")){
 							StudentUser student = (StudentUser) user;
-							if(student.getStudentId() != null){
-								studentId = student.getStudentId().toString();								
-							}
+							studentId = student.getStudentId().toString();								
 							phoneNumber = student.getPhoneNumber();
 							studentEmail = student.getEmail();
 						} %>
