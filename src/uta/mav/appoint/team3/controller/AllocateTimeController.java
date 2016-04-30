@@ -1,9 +1,11 @@
 package uta.mav.appoint.team3.controller;
 
 import uta.mav.appoint.beans.AllocateTime;
+import uta.mav.appoint.beans.CreateScheduleBean;
 import uta.mav.appoint.helpers.TimeSlotHelpers;
 import uta.mav.appoint.login.LoginUser;
 import uta.mav.appoint.visitor.AllocateTimeVisitor;
+import uta.mav.appoint.visitor.CreateScheduleVisitor;
 import uta.mav.appoint.visitor.Visitor;
 
 /**
@@ -22,11 +24,21 @@ public class AllocateTimeController {
 		catch(Exception e){
 			rep = 0;
 		}
+		CreateScheduleBean csb = new CreateScheduleBean();
+		csb.setDate(date);
+		csb.setEndDate(TimeSlotHelpers.addDate(csb.getDate(),rep));
+		csb.setStartTime(startTime);
+		csb.setEndTime(endTime);
+		csb.setUserEmail(user.getEmail());
+		Visitor csv = new CreateScheduleVisitor();
+		user.accept(csv,(Object)csb);
+		
 		AllocateTime at = new AllocateTime();
 		at.setDate(date);
 		at.setEndTime(endTime);
 		at.setStartTime(startTime);
 		at.setEmail(user.getEmail());
+		at.setScheduleID(user.getMsg());
 		Visitor v = new AllocateTimeVisitor();
 		user.accept(v,(Object)at);
 		String msg = user.getMsg();
@@ -34,6 +46,7 @@ public class AllocateTimeController {
 			at.setDate(TimeSlotHelpers.addDate(at.getDate(),1));
 			user.accept(v,(Object)at);
 		}
+		
 		return "Advising hours have been set successfully";
 	}
 }

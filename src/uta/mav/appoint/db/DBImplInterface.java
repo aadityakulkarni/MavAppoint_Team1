@@ -9,6 +9,7 @@ import uta.mav.appoint.TimeSlotComponent;
 import uta.mav.appoint.beans.AllocateTime;
 import uta.mav.appoint.beans.Appointment;
 import uta.mav.appoint.beans.AppointmentType;
+import uta.mav.appoint.beans.CreateScheduleBean;
 import uta.mav.appoint.beans.GetSet;
 import uta.mav.appoint.login.*;
 
@@ -55,6 +56,7 @@ public interface DBImplInterface {
 	public String updateNotification(AdvisorUser user, String notification);
 	public String editAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException;
 	public String cancelAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException;
+	public String createSchedule(CreateScheduleBean cs);
 	
 	
 }

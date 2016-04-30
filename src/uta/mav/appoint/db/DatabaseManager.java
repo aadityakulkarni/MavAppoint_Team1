@@ -78,7 +78,9 @@ public class DatabaseManager {
 	public String addTimeSlot(AllocateTime at) throws SQLException{
 		return imp.addTimeSlot(at);
 	}
-	
+	public String createSchedule(CreateScheduleBean cs) throws SQLException{
+		return imp.createSchedule(cs);
+	}
 	public ArrayList<AppointmentType> getAppointmentTypes(String pname) throws SQLException{
 		return imp.getAppointmentTypes(pname);
 	}

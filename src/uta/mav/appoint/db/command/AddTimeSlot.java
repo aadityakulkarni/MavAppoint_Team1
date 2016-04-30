@@ -14,13 +14,14 @@ public class AddTimeSlot extends SQLCmd{
 	int userid;
 	int count;
 	String msg;
-	
+	int scheduleId;
 	
 	public AddTimeSlot(AllocateTime at,int id){
 		date = at.getDate();
 		starttime = at.getStartTime();
 		endtime = at.getEndTime();
 		userid = id;
+		scheduleId = Integer.parseInt(at.getScheduleID());
 		count = TimeSlotHelpers.count(at.getStartTime(),at.getEndTime());
 		msg = "Unable to add time slot.";
 	}
@@ -28,13 +29,14 @@ public class AddTimeSlot extends SQLCmd{
 	@Override
 	public void queryDB(){
 		try{
-			String command = "INSERT INTO ADVISING_SCHEDULE (date,start,end,studentid,userid) VALUES(?,?,?,null,?)";
+			String command = "INSERT INTO ADVISING_SCHEDULE (date,start,end,studentid,userid,schedule_id) VALUES(?,?,?,null,?,?)";
 			PreparedStatement statement = conn.prepareStatement(command);
 			for (int i=0;i<count;i++){
 				statement.setString(1,date);
 				statement.setString(2,TimeSlotHelpers.add(starttime,i));
 				statement.setString(3,TimeSlotHelpers.add(starttime,i+1));
 				statement.setInt(4,userid);
+				statement.setInt(5,scheduleId);
 				statement.executeUpdate();
 			}
 			msg = "Time slot has been added.";
