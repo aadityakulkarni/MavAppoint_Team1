@@ -15,6 +15,7 @@ import uta.mav.appoint.beans.AllocateTime;
 import uta.mav.appoint.beans.Appointment;
 import uta.mav.appoint.beans.AppointmentType;
 import uta.mav.appoint.beans.CreateAdvisorBean;
+import uta.mav.appoint.beans.CreateScheduleBean;
 import uta.mav.appoint.beans.GetSet;
 import uta.mav.appoint.beans.RegisterBean;
 import uta.mav.appoint.db.command.*;
@@ -451,6 +452,7 @@ public class RDBImpl implements DBImplInterface{
 		int id = (int)cmd.getResult().get(0);
 		cmd = new CheckTimeSlot(at,id);
 		cmd.execute();
+		
 		if ((Boolean)cmd.getResult().get(0) == true){
 			cmd = new AddTimeSlot(at,id);
 			cmd.execute();
@@ -461,6 +463,17 @@ public class RDBImpl implements DBImplInterface{
 		}
 	}
 	
+	public String createSchedule(CreateScheduleBean cs){
+		SQLCmd cmd = new GetUserIDByEmail(cs.getUserEmail());
+		cmd.execute();
+		int id = (int)cmd.getResult().get(0);
+	
+		SQLCmd cmdSchedule = new CreateSchedule(cs,id);
+		cmdSchedule.execute();
+		int scheduleID = (int)cmdSchedule.getResult().get(1);
+		//cs.setScheduleID(scheduleID);
+		return String.valueOf(scheduleID);
+	}
 	public AdvisorUser getAdvisor(String email){
 		SQLCmd cmd = new GetUserIDByEmail(email);
 		cmd.execute();

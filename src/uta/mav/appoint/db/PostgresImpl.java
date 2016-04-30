@@ -10,6 +10,7 @@ import uta.mav.appoint.TimeSlotComponent;
 import uta.mav.appoint.beans.AllocateTime;
 import uta.mav.appoint.beans.Appointment;
 import uta.mav.appoint.beans.AppointmentType;
+import uta.mav.appoint.beans.CreateScheduleBean;
 import uta.mav.appoint.beans.GetSet;
 import uta.mav.appoint.login.AdminUser;
 import uta.mav.appoint.login.AdvisorUser;
@@ -255,6 +256,13 @@ public class PostgresImpl implements DBImplInterface {
 
 	@Override
 	public String cancelAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String createSchedule(CreateScheduleBean cs) {
 		// TODO Auto-generated method stub
 		return null;
 	}

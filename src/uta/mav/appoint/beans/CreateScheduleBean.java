@@ -2,7 +2,7 @@ package uta.mav.appoint.beans;
 
 import java.io.Serializable;
 
-public class AllocateTime implements Serializable{
+public class CreateScheduleBean implements Serializable{
 
 	/**
 	 * 
@@ -11,61 +11,45 @@ public class AllocateTime implements Serializable{
 	private String date;
 	private String startTime;
 	private String endTime;
-	private String email;
+	private String endDate;
 	private String scheduleID;
-	/**
-	 * @return the date
-	 */
+	private String userEmail;
+	
 	public String getDate() {
 		return date;
 	}
-	/**
-	 * @param date the date to set
-	 */
 	public void setDate(String date) {
 		this.date = date;
 	}
-	/**
-	 * @return the startTime
-	 */
 	public String getStartTime() {
 		return startTime;
 	}
-	/**
-	 * @param startTime the startTime to set
-	 */
 	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
-	/**
-	 * @return the endTime
-	 */
 	public String getEndTime() {
 		return endTime;
 	}
-	/**
-	 * @param endTime the endTime to set
-	 */
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
+	public String getEndDate() {
+		return endDate;
 	}
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 	public String getScheduleID() {
 		return scheduleID;
 	}
 	public void setScheduleID(String scheduleID) {
 		this.scheduleID = scheduleID;
+	}
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 	
 
