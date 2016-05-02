@@ -35,7 +35,7 @@ public interface DBImplInterface {
 	public Connection connectDB();
 	public ArrayList<AppointmentType> getAppointmentTypes(String pname) throws SQLException;
 	public Boolean updateAppointment(Appointment a);
-	public Boolean deleteTimeSlot(AllocateTime at) throws SQLException;
+	public String deleteTimeSlot(AllocateTime at) throws SQLException;
 	public Appointment getAppointment(String d, String e) throws SQLException;
 	public String addAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException;
 	public ArrayList<String> getDepartmentStrings() throws SQLException;
@@ -57,6 +57,8 @@ public interface DBImplInterface {
 	public String editAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException;
 	public String cancelAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException;
 	public String createSchedule(CreateScheduleBean cs);
+	public Boolean editTimeSlot(AllocateTime a);
+	public ArrayList<Object> appId(String scheduleId);
 	
 	
 }

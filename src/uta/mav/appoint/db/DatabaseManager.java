@@ -74,7 +74,9 @@ public class DatabaseManager {
 	public Boolean cancelAppointment(int id) throws SQLException{
 		return imp.cancelAppointment(id);
 	}
-	
+	public ArrayList<Object> appId(String scheduleId) throws SQLException{
+		return imp.appId(scheduleId);
+	}
 	public String addTimeSlot(AllocateTime at) throws SQLException{
 		return imp.addTimeSlot(at);
 	}
@@ -89,7 +91,7 @@ public class DatabaseManager {
 		return imp.updateAppointment(a);
 	}
 
-	public Boolean deleteTimeSlot(AllocateTime at) throws SQLException{
+	public String deleteTimeSlot(AllocateTime at) throws SQLException{
 		return imp.deleteTimeSlot(at);
 	}
 
@@ -155,6 +157,12 @@ public class DatabaseManager {
 	}
 	public String cancelAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException{
 		return imp.cancelAppointmentType(user, at);
+	}
+
+	public Boolean editTimeSlot(AllocateTime a) {
+		// TODO Auto-generated method stub
+			return imp.editTimeSlot(a);
+			
 	}
 	
 	/*public String addAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException{

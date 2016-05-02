@@ -12,6 +12,7 @@ import uta.mav.appoint.beans.Appointment;
 import uta.mav.appoint.db.DatabaseManager;
 import uta.mav.appoint.db.command.GetAppointmentById;
 import uta.mav.appoint.db.command.SQLCmd;
+import uta.mav.appoint.email.Email;
 
 public class CancelAppointmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;

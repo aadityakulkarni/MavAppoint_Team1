@@ -25,5 +25,8 @@ public abstract class TimeSlotComponent implements Serializable{
 	public abstract String getEvent(int m);
 	public abstract ArrayList<TimeSlotComponent> expandTimeSlots(ArrayList<TimeSlotComponent> ts);
 	
+	public void setScheduleId(int scheduleID) {};
+	public abstract int getScheduleId();
+	
 	
 }

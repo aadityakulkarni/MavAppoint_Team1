@@ -133,7 +133,7 @@ public class PostgresImpl implements DBImplInterface {
 	}
 
 	@Override
-	public Boolean deleteTimeSlot(AllocateTime at) throws SQLException {
+	public String deleteTimeSlot(AllocateTime at) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -263,6 +263,20 @@ public class PostgresImpl implements DBImplInterface {
 
 	@Override
 	public String createSchedule(CreateScheduleBean cs) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Boolean editTimeSlot(AllocateTime a) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Object> appId(String scheduleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
