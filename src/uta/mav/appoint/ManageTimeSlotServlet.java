@@ -24,10 +24,9 @@ public class ManageTimeSlotServlet extends HttpServlet {
 			header = "templates/" + user.getHeader() + ".jsp";
 			try{
 				AllocateTime at = new AllocateTime();
-				at.setDate(request.getParameter("Date"));
-				at.setStartTime(request.getParameter("StartTime2"));
-				at.setEndTime(request.getParameter("EndTime2"));
-				at.setEmail(request.getParameter("pname")); //using pname to find correct advisor instead of email
+				at.setDate(request.getParameter("Date3"));
+				at.setScheduleID(request.getParameter("scheduleid3"));
+				at.setEmail(request.getParameter("pname3")); //using pname to find correct advisor instead of email
 				Visitor v = new ManageTimeSlotVisitor();
 				user.accept(v,at);
 				response.setHeader("Refresh","2; URL=availability");

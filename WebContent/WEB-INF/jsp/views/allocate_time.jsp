@@ -42,8 +42,16 @@
 		    							if (event.id >= 0){
 		    							document.getElementById("StartTime2").value = event.start.format('HH:mm');
 		    							document.getElementById("EndTime2").value = event.end.format('HH:mm');
-		    							document.getElementById("pname").value = event.title;
-		    							document.getElementById("Date").value = event.start.format('YYYY-MM-DD');
+		    							document.getElementById("pname2").value = event.title;
+		    							document.getElementById("Date2").value = event.start.format('YYYY-MM-DD');
+		    							document.getElementById("scheduleid2").value = event.schedule_id;
+		    							
+		    							document.getElementById("scheduleid3").value = event.schedule_id;
+		    							//document.getElementById("StartTime3").value = event.start.format('HH:mm');
+		    							//document.getElementById("EndTime3").value = event.end.format('HH:mm');
+		    							document.getElementById("pname3").value = event.title;
+		    							document.getElementById("Date3").value = event.start.format('YYYY-MM-DD');
+		    							
 		    							$("#deleteTimeSlotModal").modal();
 		    							}
 		    							else{
@@ -58,6 +66,7 @@
 		 									start:'<%=schedules.get(i).getDate() + "T" + schedules.get(i).getStartTime()%>',
 		 									end:'<%=schedules.get(i).getDate() + "T" + schedules.get(i).getEndTime()%>',
 		 									id:<%=i%>,
+		 									schedule_id:'<%=schedules.get(i).getScheduleId()%>',
 		 									backgroundColor: 'blue'
 		 								}
 		 								<%if (i != (schedules.size() - 1) || appointments != null) {%>,<%}%>
@@ -111,12 +120,13 @@
 			</div>
 		</div>
 	</form>
-	<form name=deleteTimeSlot id="delete_time_slot" action="ts-manage" method="post">
 		<div class="modal fade" id="deleteTimeSlotModal" tabindex="-1">
 			<div class="modal-dialog">
 				<div class="modal-content">
+			<form name=editTimeSlot id="edit_time_slot" action="edit-ts-manage" method="post">
+	
 					<div class="modal-header">
-						<h4 class="modal-title" id="deleteTimeSlotTitle">Delete Time
+						<h4 class="modal-title" id="editTimeSlotTitle">Edit Time
 							Slot</h4>
 					</div>
 					<div class="modal-body">
@@ -125,9 +135,35 @@
 						<label for="EndTime">End Time:</label> <input type="time"
 							class="form-control" name=EndTime2 id="EndTime2" step="300">
 						<label for="Date">Date:</label> <input type="date"
-							class="form-control" name=Date id="Date"> <input
-							type="hidden" name=pname id="pname"> <label id="result2"><font
+							class="form-control" name="Date2" id="Date2"> <input
+							type="hidden" name="pname2" id="pname2"> <label id="result2"><font
 							style="color: #e67e22" size="4"></font></label>
+						<input type="hidden"
+							class="form-control" name="scheduleid2" id="scheduleid2" >	
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close</button>
+						<input type="button" value="submit"  onclick="javascript:validate1();">
+					</div>
+					</form>	
+					<form name=deleteTimeSlot id="delete_time_slot" action="ts-manage" method="post">
+	
+					<div class="modal-header">
+						<h4 class="modal-title" id="deleteTimeSlotTitle">Delete Time
+							Slot</h4>
+					</div>
+					<div class="modal-body">
+						<!--  <label for="StartTime">Start Time:</label> <input type="time"
+							class="form-control" name=StartTime3 id="StartTime3" step="300">
+						<label for="EndTime">End Time:</label> <input type="time"
+							class="form-control" name=EndTime3 id="EndTime3" step="300">
+						--><label for="Date">Date:</label> <input type="date"
+							class="form-control" name="Date3" id="Date3"> <input
+							type="hidden" name="pname3" id="pname3"> <label id="result2"><font
+							style="color: #e67e22" size="4"></font></label>
+							<input type="hidden"
+							class="form-control" name="scheduleid3" id="scheduleid3" >	
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -135,10 +171,11 @@
 						<input type="button" value="submit"
 							onclick="javascript:validate();">
 					</div>
+					</form>
 				</div>
 			</div>
 		</div>
-	</form>
+	
 	<script> function FormSubmit(){
 									var starttime = document.getElementById("starttime").value;
 									var endtime = document.getElementById("endtime").value;
@@ -186,6 +223,16 @@
 			//xmlhttp.send(params);
 			//document.getElementById("result2").innerHTML = "Attempting to delete time slot...";
 			//return false;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	function validate1(){
+		var valid = confirm('Are you sure you want to edit?');	
+		if (valid == true){
+			document.getElementById('edit_time_slot').submit();
 		}
 		else {
 			return false;

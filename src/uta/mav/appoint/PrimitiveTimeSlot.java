@@ -8,7 +8,7 @@ public class PrimitiveTimeSlot extends TimeSlotComponent{
 	private String starttime;
 	private String endtime;
 	private int uniqueid;
-	
+	private int scheduleID;
 	
 	@Override
 	public String getEvent(int m){
@@ -17,6 +17,7 @@ public class PrimitiveTimeSlot extends TimeSlotComponent{
 			+	"start:\'"+this.getDate()+"T"+this.getStartTime()+"\',\n"
 			+	"end:\'"+this.getDate()+"T"+this.getEndTime()+"\',\n"
 			+	"id:"+this.getUniqueId()+",\n"
+			+	"schedule_id:"+this.getScheduleId()+",\n"
 			+"}\n";
 	}
 	
@@ -79,5 +80,18 @@ public class PrimitiveTimeSlot extends TimeSlotComponent{
 	public void setUniqueId(int uniqueid) {
 		this.uniqueid = uniqueid;
 	}
-	
+
+	@Override
+	public void setScheduleId(int scheduleID) {
+		// TODO Auto-generated method stub
+		this.scheduleID = scheduleID;
+	}
+
+	@Override
+	public int getScheduleId() {
+		// TODO Auto-generated method stub
+		return scheduleID;
+	}
+
+		
 }

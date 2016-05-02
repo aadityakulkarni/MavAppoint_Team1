@@ -93,7 +93,9 @@
 						String studentId = "", phoneNumber = "", studentEmail = "";
 						if(user.getRole() != null && user.getRole().equalsIgnoreCase("student")){
 							StudentUser student = (StudentUser) user;
-							studentId = student.getStudentId().toString();								
+							if(student.getStudentId() != null){
+								studentId = student.getStudentId().toString();								
+							}
 							phoneNumber = student.getPhoneNumber();
 							studentEmail = student.getEmail();
 						} %>

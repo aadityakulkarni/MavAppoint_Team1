@@ -107,6 +107,14 @@
 		<url-pattern>/ts-manage</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>EditTimeSlotServlet</servlet-name>
+		<servlet-class>uta.mav.appoint.EditTimeSlotServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EditTimeSlotServlet</servlet-name>
+		<url-pattern>/edit-ts-manage</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>SendEmailServlet</servlet-name>
 		<servlet-class>uta.mav.appoint.SendEmailServlet</servlet-class>
 	</servlet>

@@ -88,4 +88,16 @@ public class CompositeTimeSlot extends TimeSlotComponent{
 		return ts;
 	
 	}
+
+	/*@Override
+	public void setScheduleId(int scheduleID) {
+		// TODO Auto-generated method stub
+		return children.get(0).getScheduleId();
+	}*/
+
+	@Override
+	public int getScheduleId() {
+		// TODO Auto-generated method stub
+		return children.get(0).getScheduleId();
+	}
 }

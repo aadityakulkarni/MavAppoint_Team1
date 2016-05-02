@@ -23,7 +23,14 @@ public class Appointment implements Serializable{
 	Integer studentUserId;
 	//added by aaditya
 	String advisorComments;
+	int scheduleId;
 	
+	public int getScheduleId() {
+		return scheduleId;
+	}
+	public void setScheduleId(int scheduleId) {
+		this.scheduleId = scheduleId;
+	}
 	/**
 	 * @return the pname
 	 */

@@ -130,12 +130,12 @@ public class RDBImpl implements DBImplInterface{
 			Connection conn = this.connectDB();
 			PreparedStatement statement;
 			if (name.equals("all")){
-			String command = "SELECT pname,date,start,end,id FROM user,Advising_Schedule,User_Advisor "
+			String command = "SELECT pname,date,start,end,id,schedule_id FROM user,Advising_Schedule,User_Advisor "
 							+ "WHERE user.userid=User_Advisor.userid AND user.userid=Advising_Schedule.userid AND studentId is null";
 			statement = conn.prepareStatement(command);
 			}
 			else{
-				String command = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor "
+				String command = "SELECT pname,date,start,end,id,schedule_id FROM USER,Advising_Schedule,User_Advisor "
 								+ "WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname=? AND studentId is null";
 				statement = conn.prepareStatement(command);
 				statement.setString(1,name);
@@ -149,6 +149,7 @@ public class RDBImpl implements DBImplInterface{
 				set.setStartTime(res.getString(3));
 				set.setEndTime(res.getString(4));
 				set.setUniqueId(res.getInt(5));
+				set.setScheduleId(res.getInt(6));
 				array.add(set);
 			}
 			array = TimeSlotHelpers.createCompositeTimeSlot(array);
@@ -252,7 +253,7 @@ public class RDBImpl implements DBImplInterface{
 				if (rs.getInt(1) < 1) {
 					command = "INSERT INTO Appointments (id,advisor_userid,student_userid,date,start,end,type,studentId,description,student_email,student_cell)"
 							+ "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-					statement = conn.prepareStatement(command);
+					statement = conn.prepareStatement(command, PreparedStatement.RETURN_GENERATED_KEYS);
 					statement.setInt(1, appointment.getAppointmentId());
 					statement.setInt(2, advisor_id);
 					statement.setInt(3, student_id);
@@ -274,15 +275,24 @@ public class RDBImpl implements DBImplInterface{
 					statement.executeUpdate();
 					// System.out.println("Should have set "+appointment.getStudentPhoneNumber());
 					// System.out.println("Update should have executed");
-
-					command = "UPDATE Advising_Schedule SET studentId=? where userid=? AND date=? and start >= ? and end <= ?";
+					int appid =0;
+					ResultSet rs1 = statement.getGeneratedKeys();
+	                if(rs1.next())
+	                {
+	                	appid = rs1.getInt(1);
+	                }
+					
+					command = "UPDATE Advising_Schedule SET studentId=?, appid=? where userid=? AND date=? and start >= ? and end <= ?";
 					statement = conn.prepareStatement(command);
 					String studentId = Util.isEmpty(appointment.getStudentId())?"-1":appointment.getStudentId();
 					statement.setString(1, studentId);
-					statement.setInt(2, advisor_id);
-					statement.setString(3, appointment.getAdvisingDate());
-					statement.setString(4, appointment.getAdvisingStartTime());
-					statement.setString(5, appointment.getAdvisingEndTime());
+					statement.setInt(2, appid);
+					statement.setInt(3, advisor_id);
+				
+					
+					statement.setString(4, appointment.getAdvisingDate());
+					statement.setString(5, appointment.getAdvisingStartTime());
+					statement.setString(6, appointment.getAdvisingEndTime());
 					statement.executeUpdate();
 					result.put("response", "success");
 					result.put("appointmentId", appointment.getAppointmentId()
@@ -445,6 +455,37 @@ public class RDBImpl implements DBImplInterface{
 		}
 		return result;
 	}
+
+	public ArrayList<Object> appId(String scheduleId){
+		
+		/*ArrayList<String> AppointmentIds = new ArrayList<String>();
+		
+		SQLCmd cmdSchedule = new AppId(scheduleId);
+		cmdSchedule.execute();
+		
+		return AppointmentIds;
+		int scheduleID = (int)cmdSchedule.getResult().get(1);
+		//cs.setScheduleID(scheduleID);
+		return String.valueOf(scheduleID);*/
+		
+
+		ArrayList<Object> arraylist = new ArrayList<Object>();
+		try{
+			SQLCmd cmd = new AppId(scheduleId);
+			cmd.execute();
+			ArrayList<Object> tmp = cmd.getResult();
+			for (int i=0;i<tmp.size();i++){
+				arraylist.add((tmp.get(i)));
+			}
+		}
+		catch(Exception sq){
+			//System.out.printf(sq.toString());
+		}
+		return arraylist;
+	
+	}
+	
+
 	
 	public String addTimeSlot(AllocateTime at){
 		SQLCmd cmd = new GetUserIDByEmail(at.getEmail());
@@ -539,11 +580,11 @@ public class RDBImpl implements DBImplInterface{
 	
 	}
 	
-	public Boolean deleteTimeSlot(AllocateTime at){
-		Boolean b;
+	public String deleteTimeSlot(AllocateTime at){
+		String b;
 		SQLCmd cmd = new DeleteTimeSlot(at);
 		cmd.execute();
-		b = (Boolean)(cmd.getResult()).get(0);
+		b = (String)(cmd.getResult()).get(0);
 		return b;
 	}
 	
@@ -882,6 +923,13 @@ public class RDBImpl implements DBImplInterface{
 			}
 		}
 		return "Updated successfully";
+	}
+
+
+	@Override
+	public Boolean editTimeSlot(AllocateTime a) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
