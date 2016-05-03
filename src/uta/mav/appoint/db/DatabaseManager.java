@@ -164,6 +164,21 @@ public class DatabaseManager {
 			return imp.editTimeSlot(a);
 			
 	}
+
+	public Boolean resetPassword(String emailAddress, String resetKey, String dateNow) {
+		// TODO Auto-generated method stub
+		return imp.resetPassword(emailAddress,resetKey,dateNow);
+	}
+
+	public ArrayList<Object> getEmailResetPass(String resetKey) {
+		// TODO Auto-generated method stub
+		return imp.getEmailResetPass(resetKey);
+	}
+
+	public Boolean resetPass(String email, String hashpass) {
+		// TODO Auto-generated method stub
+		return imp.setResetPass(email,hashpass);
+	}
 	
 	/*public String addAppointmentType(AdvisorUser user, AppointmentType at) throws SQLException{
 		return imp.addAppointmentType(user, at);

@@ -13,8 +13,7 @@ import javax.servlet.http.HttpSession;
 import uta.mav.appoint.beans.AppointmentType;
 import uta.mav.appoint.db.DatabaseManager;
 import uta.mav.appoint.login.LoginUser;
-import uta.mav.appoint.team1.facade.Facade;
-
+import uta.mav.appoint.team3.controller.ScheduleAppointmentController;
 
 public class ScheduleAppointmentServlet extends HttpServlet{
 	private static final long serialVersionUID = -5925080374199613248L;
@@ -64,8 +63,7 @@ public class ScheduleAppointmentServlet extends HttpServlet{
 		String email = request.getParameter("email");
 	
 		try{
-			Facade facade=new Facade();
-			facade.scheduleAppointment(phoneNumber, appointmentId, studentId,
+			ScheduleAppointmentController.scheduleAppointment(phoneNumber, appointmentId, studentId,
 					description, appType, pName, duration, start, email);
 			response.setHeader("Refresh","2; URL=advising");
 			request.getRequestDispatcher("/WEB-INF/jsp/views/success.jsp").forward(request,response);
@@ -78,3 +76,4 @@ public class ScheduleAppointmentServlet extends HttpServlet{
 		}
 	}
 }
+

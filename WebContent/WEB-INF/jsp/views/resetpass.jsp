@@ -1,5 +1,6 @@
 <%@ include file="templates/header.jsp"%>
-<%  String message = (String)session.getAttribute("message"); %>
+<%  String message = (String)session.getAttribute("message");
+	String email = (String)session.getAttribute("email");%>
 <style>
 .panel-heading {
 	padding: 5px 15px;
@@ -27,10 +28,10 @@
 		<div class="col-sm-6 col-md-4 col-md-offset-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<strong>Sign in to continue</strong>
+					<strong>Reset Password</strong>
 				</div>
 				<div class="panel-body">
-					<form role="form" action="#" method="POST">
+					<form role="form" action="setnewpass" method="POST">
 						<fieldset>
 							<div class="row">
 								<div class="center-block">
@@ -44,25 +45,28 @@
 											<span class="input-group-addon"> <i
 												class="glyphicon glyphicon-user"></i>
 											</span> <input type="text" class="form-control" name=emailAddress
-												placeholder="yourname@mavs.uta.edu">
+												value="<%=email%>" disabled>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="input-group">
 											<span class="input-group-addon"> <i
 												class="glyphicon glyphicon-lock"></i>
-											</span> <input type="password" class="form-control" name=password>
+											</span> <input type="password" class="form-control" name=password placeholder="Password">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="input-group">
+											<span class="input-group-addon"> <i
+												class="glyphicon glyphicon-lock"></i>
+											</span> <input type="password" class="form-control" name=confpassword placeholder="Confirm Passord">
 										</div>
 									</div>
 									<div class="form-group">
 										<input type="submit" class="btn btn-lg btn-primary btn-block"
-											value="Sign in">
+											value="Reset">
 											</form>
 									</div>
-									
-										<a href="#" class="pull-right" 
-										onclick="javascript:$('#resetPassModal').modal();">
-										Reset Password</a>
 									
 								</div>
 							</div>
@@ -74,32 +78,5 @@
 		</div>
 	</div>
 </div>
-<form name=resetPass id="resetpass" action="resetpass" method="post">
-		<div class="modal fade" id="resetPassModal" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title" id="resetPassLabel">Reset Password</h4>
-					</div>
-					<div class="modal-body">
-					<div class="form-group">
-										<div class="input-group">
-											<span class="input-group-addon"> <i
-												class="glyphicon glyphicon-user"></i>
-											</span> <input type="text" class="form-control" name=emailAddress
-												placeholder="yourname@mavs.uta.edu">
-										</div>
-									</div>
-										
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
-						<input type="submit" value="submit" >
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
 
 <%@ include file="templates/footer.jsp"%>

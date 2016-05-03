@@ -27,6 +27,7 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		session = request.getSession();
 		session.setAttribute("message", "");
+	
 		request.getRequestDispatcher("/WEB-INF/jsp/views/login.jsp").forward(request,response);
 	}
 	

@@ -59,6 +59,9 @@ public interface DBImplInterface {
 	public String createSchedule(CreateScheduleBean cs);
 	public Boolean editTimeSlot(AllocateTime a);
 	public ArrayList<Object> appId(String scheduleId);
+	public Boolean resetPassword(String emailAddress, String resetKey, String dateNow);
+	public ArrayList<Object> getEmailResetPass(String resetKey);
+	public Boolean setResetPass(String email, String hashpass);
 	
 	
 }

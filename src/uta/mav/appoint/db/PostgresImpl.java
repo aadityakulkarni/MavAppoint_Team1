@@ -280,4 +280,26 @@ public class PostgresImpl implements DBImplInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+	@Override
+	public Boolean resetPassword(String emailAddress, String resetKey, String dateNow) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Object> getEmailResetPass(String resetKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Boolean setResetPass(String email, String hashpass) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

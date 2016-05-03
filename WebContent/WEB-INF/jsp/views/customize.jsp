@@ -15,9 +15,12 @@ width: 80%;
 <!-- Panel -->
 <div class="panel panel-default resize center-block">
 <!-- Default panel contents -->
-<div class="panel-heading text-center"><h1>Customize Settings</h1></div>
-<% ArrayList<AppointmentType> ats = (ArrayList<AppointmentType>)session.getAttribute("appointmenttypes");
-if(ats != null){ %>
+<!-- <div class="panel-heading text-center"><h1>Customize Settings</h1></div>
+ --><% ArrayList<AppointmentType> ats = (ArrayList<AppointmentType>)session.getAttribute("appointmenttypes");
+if(ats != null){ 
+
+	
+%>
 <div class="panel-body resize-body center-block">
 	<form action="appointments" method="post" name="cancel">
 	<div class="panel-heading text-center"><h3>Appointment Manager</h3></div>
