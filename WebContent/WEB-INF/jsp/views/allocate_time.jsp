@@ -97,7 +97,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="addTimeSlotLabel">Add Time Slots</h4>
+						<h4 class="modal-title" id="addTimeSlotLabel">Add Schedule</h4>
 					</div>
 					<div class="modal-body">
 						<label for="starttime">Start Time:</label> <input type="time"
@@ -126,8 +126,7 @@
 			<form name=editTimeSlot id="edit_time_slot" action="edit-ts-manage" method="post">
 	
 					<div class="modal-header">
-						<h4 class="modal-title" id="editTimeSlotTitle">Edit Time
-							Slot</h4>
+						<h4 class="modal-title" id="editTimeSlotTitle">Edit Schedule</h4>
 					</div>
 					<div class="modal-body">
 						<label for="StartTime">Start Time:</label> <input type="time"
@@ -150,8 +149,7 @@
 					<form name=deleteTimeSlot id="delete_time_slot" action="ts-manage" method="post">
 	
 					<div class="modal-header">
-						<h4 class="modal-title" id="deleteTimeSlotTitle">Delete Time
-							Slot</h4>
+						<h4 class="modal-title" id="deleteTimeSlotTitle">Delete Schedule</h4>
 					</div>
 					<div class="modal-body">
 						<!--  <label for="StartTime">Start Time:</label> <input type="time"

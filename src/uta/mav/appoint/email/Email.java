@@ -37,7 +37,7 @@ public class Email {
         try {
  
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("team3sdp@gmail.com"));
+            message.setFrom(new InternetAddress("team1sdps16@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(toEmail));
             message.setSubject(subject);

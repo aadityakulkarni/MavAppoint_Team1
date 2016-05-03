@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import uta.mav.appoint.PrimitiveTimeSlot;
 import uta.mav.appoint.TimeSlotComponent;
 import uta.mav.appoint.beans.AllocateTime;
@@ -19,6 +18,7 @@ import uta.mav.appoint.beans.CreateAdvisorBean;
 import uta.mav.appoint.beans.CreateScheduleBean;
 import uta.mav.appoint.beans.GetSet;
 import uta.mav.appoint.beans.RegisterBean;
+import uta.mav.appoint.beans.ResetPasswordBean;
 import uta.mav.appoint.db.command.*;
 import uta.mav.appoint.flyweight.TimeSlotFlyweightFactory;
 import uta.mav.appoint.helpers.TimeSlotHelpers;
@@ -881,44 +881,43 @@ public class RDBImpl implements DBImplInterface{
 		String msg = null;
 		SQLCmd cmd = new GetUserIDByEmail(user.getEmail());
 		cmd.execute();
+		/*cmd = new EditAppointmentType(at, (int) cmd.getResult().get(0));
+		cmd.execute();
+		return (String) cmd.getResult().get(0);
+		*/
 		int userId = (int) cmd.getResult().get(0);
-		/*
-		
-		
-		cmd = new EditAppointmentType(at, userId);
-		cmd.execute();*/
-		//return (String) cmd.getResult().get(0);
 		return String.valueOf(createEditAppointmentTypePrototype(at,userId)); 
 	}
 
+	
 	private int createEditAppointmentTypePrototype(AppointmentType at, int userId) {
-		RDBCmdPrototype prototype = PrototypeMgr.getInstance().get("Update Prototype");
-		if(prototype == null){
-			prototype = new UpdatePrototype(new HashMap<String, Object>(), new HashMap<String, Object>());
-			PrototypeMgr.getInstance().add("Update Prototype", prototype);
-		}
-		UpdatePrototype prot;
-		Map<String, Object> whereParams = new HashMap<String, Object>();
-		Map<String, Object> setParams = new HashMap<String, Object>();
-		whereParams.put("userId", userId);
-		whereParams.put("type", at.getType());
-		setParams.put("duration", at.getDuration());
-		try {
-			prot = (UpdatePrototype) prototype.clone();
-			prot.setTableName("Appointment_Types");
-			prot.setSetParams(setParams);
-			prot.setWhereParams(whereParams);
-			prot.execute();
-			int advisorUser = prot.getPrototypeResult();
-			return advisorUser;
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		
-		return 0;		
-	}
-
-
+ 		RDBCmdPrototype prototype = PrototypeMgr.getInstance().get("Update Prototype");
+ 		if(prototype == null){
+ 			prototype = new UpdatePrototype(new HashMap<String, Object>(), new HashMap<String, Object>());
+ 			PrototypeMgr.getInstance().add("Update Prototype", prototype);
+ 		}
+ 		UpdatePrototype prot;
+ 		Map<String, Object> whereParams = new HashMap<String, Object>();
+ 		Map<String, Object> setParams = new HashMap<String, Object>();
+ 		whereParams.put("userId", userId);
+ 		whereParams.put("type", at.getType());
+ 		setParams.put("duration", at.getDuration());
+ 		try {
+ 			prot = (UpdatePrototype) prototype.clone();
+ 			prot.setTableName("Appointment_Types");
+ 			prot.setSetParams(setParams);
+ 			prot.setWhereParams(whereParams);
+ 			prot.execute();
+ 			int advisorUser = prot.getPrototypeResult();
+ 			return advisorUser;
+ 		} catch (CloneNotSupportedException e) {
+ 			e.printStackTrace();
+ 		}
+ 		
+ 		return 0;		
+ 	}
+	
+	
 	@Override
 	public String cancelAppointmentType(AdvisorUser user, AppointmentType at) {
 		String msg = null;
@@ -967,6 +966,42 @@ public class RDBImpl implements DBImplInterface{
 	public Boolean editTimeSlot(AllocateTime a) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public Boolean resetPassword(String emailAddress,String resetKey, String date) {
+		// TODO Auto-generated method stub
+		String msg = null;
+		SQLCmd cmd = new ResetPass(emailAddress,resetKey,date);
+		cmd.execute();
+		return (Boolean) cmd.getResult().get(0);
+	}
+
+
+	@Override
+	public ArrayList<Object> getEmailResetPass(String resetKey) {
+		// TODO Auto-generated method stub
+		
+	
+		//ArrayList<Object> e = new ArrayList<Object>();
+		
+		SQLCmd cmd = new EmailResetPass(resetKey);
+		cmd.execute();
+		ArrayList<Object> tmp = cmd.getResult();
+	/*	for (int i=0;i<tmp.size();i++){
+			e.add(((String)tmp.get(i)));
+		}
+	*/	return tmp;
+	}
+
+
+	@Override
+	public Boolean setResetPass(String email, String hashpass) {
+		// TODO Auto-generated method stub
+		SQLCmd cmd = new SetResetPass(email,hashpass);
+		cmd.execute();
+		return (Boolean) cmd.getResult().get(0);
 	}
 }
 

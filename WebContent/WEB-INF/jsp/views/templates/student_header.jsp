@@ -5,7 +5,7 @@
 	
 		<li><a href="changePassword"><font style="color: #e67e22" size="3">Change Password</font></a></li>
 		<li><a href="advising"><font style="color: #e67e22" size="3">Advising </font></a></li>
-		<li><a href="customize"><font style="color: #e67e22" size="3">Customize Settings</font></a></li>
+		<li><a href="customize"><font style="color: #e67e22" size="3">Notification</font></a></li>
 		<li><a href="appointments"><font style="color: #e67e22" size="3">Appointments </font></a></li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">

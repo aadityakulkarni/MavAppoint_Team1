@@ -194,4 +194,20 @@
     <servlet-name>EditDeleteAptTypeServlet</servlet-name>
     <url-pattern>/cancel_edit_app_type</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ResetPasswordServlet</servlet-name>
+    <servlet-class>uta.mav.appoint.ResetPasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResetPasswordServlet</servlet-name>
+    <url-pattern>/resetpass</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SetNewPasswordServlet</servlet-name>
+    <servlet-class>uta.mav.appoint.SetNewPasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SetNewPasswordServlet</servlet-name>
+    <url-pattern>/setnewpass</url-pattern>
+  </servlet-mapping>
 </web-app>
