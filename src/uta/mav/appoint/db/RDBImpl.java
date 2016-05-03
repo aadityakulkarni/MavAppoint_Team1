@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import uta.mav.appoint.PrimitiveTimeSlot;
 import uta.mav.appoint.TimeSlotComponent;
@@ -22,6 +23,9 @@ import uta.mav.appoint.db.command.*;
 import uta.mav.appoint.flyweight.TimeSlotFlyweightFactory;
 import uta.mav.appoint.helpers.TimeSlotHelpers;
 import uta.mav.appoint.login.*;
+import uta.mav.appoint.prototype.PrototypeMgr;
+import uta.mav.appoint.prototype.RDBCmdPrototype;
+import uta.mav.appoint.prototype.UpdatePrototype;
 import uta.mav.appoint.team3fall.singleton.ConfigFileReader;
 import uta.mav.appoint.team3fall.util.Util;
 
@@ -877,10 +881,43 @@ public class RDBImpl implements DBImplInterface{
 		String msg = null;
 		SQLCmd cmd = new GetUserIDByEmail(user.getEmail());
 		cmd.execute();
-		cmd = new EditAppointmentType(at, (int) cmd.getResult().get(0));
-		cmd.execute();
-		return (String) cmd.getResult().get(0);
+		int userId = (int) cmd.getResult().get(0);
+		/*
+		
+		
+		cmd = new EditAppointmentType(at, userId);
+		cmd.execute();*/
+		//return (String) cmd.getResult().get(0);
+		return String.valueOf(createEditAppointmentTypePrototype(at,userId)); 
 	}
+
+	private int createEditAppointmentTypePrototype(AppointmentType at, int userId) {
+		RDBCmdPrototype prototype = PrototypeMgr.getInstance().get("Update Prototype");
+		if(prototype == null){
+			prototype = new UpdatePrototype(new HashMap<String, Object>(), new HashMap<String, Object>());
+			PrototypeMgr.getInstance().add("Update Prototype", prototype);
+		}
+		UpdatePrototype prot;
+		Map<String, Object> whereParams = new HashMap<String, Object>();
+		Map<String, Object> setParams = new HashMap<String, Object>();
+		whereParams.put("userId", userId);
+		whereParams.put("type", at.getType());
+		setParams.put("duration", at.getDuration());
+		try {
+			prot = (UpdatePrototype) prototype.clone();
+			prot.setTableName("Appointment_Types");
+			prot.setSetParams(setParams);
+			prot.setWhereParams(whereParams);
+			prot.execute();
+			int advisorUser = prot.getPrototypeResult();
+			return advisorUser;
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;		
+	}
+
 
 	@Override
 	public String cancelAppointmentType(AdvisorUser user, AppointmentType at) {
