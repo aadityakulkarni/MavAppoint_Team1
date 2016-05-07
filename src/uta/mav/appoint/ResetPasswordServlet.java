@@ -19,6 +19,7 @@ import uta.mav.appoint.db.DatabaseManager;
 import uta.mav.appoint.email.Email;
 import uta.mav.appoint.login.LoginUser;
 import uta.mav.appoint.team3.security.RandomPasswordGenerator;
+import uta.mav.appoint.team3fall.singleton.ConfigFileReader;
 
 /**
  * Servlet implementation class ResetPasswordServlet
@@ -113,7 +114,7 @@ public class ResetPasswordServlet extends HttpServlet {
 				if (res) {
 					Email userEmail = new Email("MavAppoint Reset Password",
 							"Please click on the following link to reset password\n"
-									+ "http://localhost:8080/MavAppoint/resetpass?resetpasskey=" + resetKey,
+									+ConfigFileReader.getInstance().getValue("APP_URL")+"resetpass?resetpasskey=" + resetKey,
 							emailAddress);
 					userEmail.sendMail();
 				}

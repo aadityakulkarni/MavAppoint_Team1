@@ -9,6 +9,7 @@ import uta.mav.appoint.db.DatabaseManager;
 import uta.mav.appoint.team3.command.Email;
 import uta.mav.appoint.team3.command.NotificationCommand;
 import uta.mav.appoint.team3.command.OutlookNotification;
+import uta.mav.appoint.team3fall.singleton.ConfigFileReader;
 import uta.mav.appoint.team3fall.util.Util;
 
 /**
@@ -47,9 +48,9 @@ public class ScheduleAppointmentController {
 				notifyEmail.setText("\n\nAn appointment has been set for " + a.getAdvisingDate()
 			+ " at " + a.getAdvisingStartTime() + " - " + a.getAdvisingEndTime() +
 			"\n\nTo View this appointment please click on the link below:"+
-			"\nhttp://localhost:8080/MavAppoint/viewGuestAppointment?viewApt="+result.get("appointmentId") +
+			"\n"+ConfigFileReader.getInstance().getValue("APP_URL")+"viewGuestAppointment?viewApt="+result.get("appointmentId") +
 			"\n\nTo Cancel this appointment please click on the link below:"+
-			"\nhttp://localhost:8080/MavAppoint/cancel?id="+result.get("appointmentId"));
+			"\n"+ConfigFileReader.getInstance().getValue("APP_URL")+"cancel?id="+result.get("appointmentId"));
 				notifyEmail.setTo_address(email);
 				NotificationCommand command = notifyEmail;
 				command.execute();

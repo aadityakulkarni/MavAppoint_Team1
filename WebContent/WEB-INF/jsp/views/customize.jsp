@@ -1,3 +1,4 @@
+<%@page import="uta.mav.appoint.team3fall.singleton.ConfigFileReader"%>
 <jsp:include page='<%=(String) request.getAttribute("includeHeader")%>' />
 <style>
 .resize {
@@ -43,7 +44,7 @@ if(ats != null){
 					<tr>
 						<td><font style="color: #0" size="3"><%=ats.get(i).getType()%></font></td>
 						<td><font style="color: #0" size="3"><%=ats.get(i).getDuration()%></font></td>
-						<td><a class="btn btn-link btn-xs" type="button" id="button1<%=i%>" href="/MavAppoint/cancel_edit_app_type?type=<%=ats.get(i).getType()%>&status=cancel">Delete</a>
+						<td><a class="btn btn-link btn-xs" type="button" id="button1<%=i%>" href="/<%=ConfigFileReader.getInstance().getValue("APP_CONTEXT")%>/cancel_edit_app_type?type=<%=ats.get(i).getType()%>&status=cancel">Delete</a>
 							<a class="btn btn-link btn-xs" type="button" id="button2_<%=i%>" onclick="edit('<%=ats.get(i).getType()%>','<%=ats.get(i).getDuration()%>')" href="#" data-toggle="modal" data-target="#editApptType">Edit</a>
 						</td>
 						
@@ -174,7 +175,7 @@ if(ats != null){
 			var apptype = document.getElementById("apptypes_edit").value;
 			var minutes = document.getElementById("minutes_edit").value;
 			
-			window.location = "/MavAppoint/cancel_edit_app_type?apptypes="+apptype+"&minutes="+minutes+"&status=edit";
+			window.location = "/<%=ConfigFileReader.getInstance().getValue("APP_CONTEXT")%>/cancel_edit_app_type?apptypes="+apptype+"&minutes="+minutes+"&status=edit";
 		
 		}
 								
